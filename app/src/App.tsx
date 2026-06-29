@@ -7,7 +7,6 @@ import CustomerExperience from "@/sections/CustomerExperience";
 import PopularStores from "@/sections/PopularStores";
 import FAQSection from "@/sections/FAQSection";
 import StartSellingCTA from "@/sections/StartSellingCTA";
-import DiscoverStores from "@/sections/DiscoverStores";
 import Footer from "@/sections/Footer";
 
 function App() {
@@ -23,7 +22,6 @@ function App() {
         <PopularStores />
         <FAQSection />
         <StartSellingCTA />
-        <DiscoverStores />
       </main>
       <Footer />
     </div>

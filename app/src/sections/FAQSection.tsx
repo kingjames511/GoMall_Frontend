@@ -1,82 +1,70 @@
-import { useState, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { faqs } from "@/data/siteData";
 
 const FAQSection = () => {
-  const [openId, setOpenId] = useState<number | null>(null);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const toggleFaq = (id: number) => {
-    setOpenId(openId === id ? null : id);
-  };
-
   return (
-    <section id="faqs" ref={ref} className="py-20 bg-white">
-      <div className="container-main">
+    <section
+      id="faqs"
+      ref={ref}
+      className="py-20 md:py-28 bg-white relative overflow-hidden"
+    >
+      {/* Watermark Logo */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
+        <img
+          src="/assets/logo.png"
+          alt="GoMall Watermark Logo"
+          className="w-[280px] sm:w-[450px] md:w-[400px] lg:w-[580px] opacity-10 object-contain"
+        />
+      </div>
+
+      <div className="container-main relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-16 md:mb-20"
         >
-          <span className="text-caption uppercase text-text-secondary tracking-[0.1em]">
+          <span className="text-caption uppercase text-text-secondary tracking-[0.1em] font-semibold">
             FAQS
           </span>
-          <h2 className="text-h2 text-text-primary mt-2">
+          <h2 className="text-h2 text-text-primary mt-2 font-bold">
             Frequently Asked Questions
           </h2>
         </motion.div>
 
-        {/* Accordion */}
-        <div className="max-w-3xl mx-auto">
+        {/* FAQ Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 gap-y-12 md:gap-y-16 max-w-6xl mx-auto">
           {faqs.map((faq, index) => (
             <motion.div
               key={faq.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{
                 duration: 0.5,
                 delay: index * 0.1,
                 ease: [0.4, 0, 0.2, 1],
               }}
-              className="border-b border-border-gray"
+              className="flex gap-4 md:gap-5 items-start text-left"
             >
-              <button
-                onClick={() => toggleFaq(faq.id)}
-                className="w-full flex items-center gap-4 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-navy focus-visible:ring-offset-2 rounded-sm"
-              >
-                <span className="w-6 h-6 rounded-full border border-border-gray flex items-center justify-center text-caption text-text-secondary shrink-0">
-                  {faq.id}
-                </span>
-                <span className="flex-1 text-body font-medium text-text-primary">
-                  {faq.question}
-                </span>
-                <motion.span
-                  animate={{ rotate: openId === faq.id ? 180 : 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ChevronDown size={20} className="text-text-secondary" />
-                </motion.span>
-              </button>
+              {/* Number Badge */}
+              <div className="w-8 h-8 rounded-full bg-[#0B1F3F] flex items-center justify-center text-white font-bold text-sm shrink-0">
+                {faq.id}
+              </div>
 
-              <AnimatePresence initial={false}>
-                {openId === faq.id && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                  >
-                    <p className="text-body-sm text-text-secondary pb-4 pl-10">
-                      {faq.answer}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* Text Content */}
+              <div className="flex-1">
+                <h3 className="text-h4 md:text-h3 font-bold text-text-primary leading-snug">
+                  {faq.question}
+                </h3>
+                <p className="text-body text-text-secondary mt-2.5 md:mt-3 leading-relaxed">
+                  {faq.answer}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -86,3 +74,4 @@ const FAQSection = () => {
 };
 
 export default FAQSection;
+

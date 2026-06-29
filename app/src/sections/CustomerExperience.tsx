@@ -11,19 +11,31 @@ const iconMap: Record<string, React.ElementType> = {
 
 const CustomerExperience = () => {
   return (
-    <section id="about" className="py-16 bg-white">
+    <section id="about" className="py-16 bg-white overflow-hidden">
       <div className="container-main">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-h2 text-text-primary max-w-[400px] mb-12"
-        >
-          We provide the best customer experiences
-        </motion.h2>
+        {/* Header Row with Line */}
+        <div className="flex items-center gap-6 md:gap-12 mb-12 w-full">
+          <motion.h2
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-h2 text-text-primary font-bold leading-tight shrink-0 text-left"
+          >
+            We provide the <br />
+            best customer experiences
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="hidden sm:block flex-1 h-[3px] bg-border-gray origin-left"
+          />
+        </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Features Grid - Left Aligned */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           {features.map((feature, index) => {
             const Icon = iconMap[feature.icon];
             return (
@@ -37,15 +49,16 @@ const CustomerExperience = () => {
                   delay: index * 0.1,
                   ease: [0.4, 0, 0.2, 1],
                 }}
-                className="flex flex-col items-center text-center"
+                className="flex flex-col items-start text-left"
               >
-                <div className="w-14 h-14 rounded-full bg-gray-bg flex items-center justify-center">
-                  <Icon size={24} className="text-navy" />
+                {/* Left-Aligned Icon Circle */}
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#EBF1FA] flex items-center justify-center shrink-0">
+                  <Icon className="w-5 h-5 md:w-6 md:h-6 text-navy" />
                 </div>
-                <h3 className="text-body font-semibold text-text-primary mt-4">
+                <h3 className="text-body font-bold text-text-primary mt-4 sm:mt-5">
                   {feature.title}
                 </h3>
-                <p className="text-caption text-text-secondary mt-1 max-w-[200px]">
+                <p className="text-caption text-text-secondary mt-1.5 md:mt-2 max-w-[260px] leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
