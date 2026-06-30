@@ -3,7 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, Heart, ShoppingCart, User, Menu, X, LogIn, UserPlus } from "lucide-react";
 import { navLinks } from "@/data/siteData";
 
-const Navbar = () => {
+interface NavbarProps {
+  onNavigate?: (page: string) => void;
+}
+
+const Navbar = ({ onNavigate }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,13 +39,16 @@ const Navbar = () => {
     >
       <div className="container-main h-[72px] flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="flex items-center shrink-0">
+        <button
+          onClick={() => onNavigate?.("home")}
+          className="flex items-center shrink-0 focus:outline-none cursor-pointer"
+        >
           <img
             src="/assets/logo.png"
             alt="GoMall"
             className="h-10 w-auto object-contain"
           />
-        </a>
+        </button>
 
         {/* Desktop Nav Links */}
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">
@@ -49,6 +56,12 @@ const Navbar = () => {
             <a
               key={link.label}
               href={link.href}
+              onClick={(e) => {
+                if (link.href === "/") {
+                  e.preventDefault();
+                  onNavigate?.("home");
+                }
+              }}
               className="text-body font-medium text-text-primary hover:text-navy transition-colors duration-200"
             >
               {link.label}
@@ -84,10 +97,15 @@ const Navbar = () => {
             </button>
 
             {/* User Menu */}
-            <div className="relative" ref={userMenuRef}>
+            <div
+              className="relative py-2"
+              ref={userMenuRef}
+              onMouseEnter={() => setUserMenuOpen(true)}
+              onMouseLeave={() => setUserMenuOpen(false)}
+            >
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="w-8 h-8 rounded-full bg-gray-bg flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors"
+                className="w-8 h-8 rounded-full bg-gray-bg flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
                 aria-label="User menu"
               >
                 <User size={18} />
@@ -102,20 +120,26 @@ const Navbar = () => {
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="absolute right-0 top-10 w-44 bg-white rounded-lg shadow-lg border border-border-gray py-2 z-50"
                   >
-                    <a
-                      href="#login"
-                      className="flex items-center gap-3 px-4 py-2.5 text-body text-text-primary hover:bg-gray-bg transition-colors"
+                    <button
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        onNavigate?.("login");
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-body text-text-primary hover:bg-gray-bg transition-colors cursor-pointer text-left"
                     >
                       <LogIn size={16} />
                       Login
-                    </a>
-                    <a
-                      href="#signup"
-                      className="flex items-center gap-3 px-4 py-2.5 text-body text-text-primary hover:bg-gray-bg transition-colors"
+                    </button>
+                    <button
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        onNavigate?.("signup");
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-body text-text-primary hover:bg-gray-bg transition-colors cursor-pointer text-left"
                     >
                       <UserPlus size={16} />
                       Sign Up
-                    </a>
+                    </button>
                   </motion.div>
                 )}
               </AnimatePresence>

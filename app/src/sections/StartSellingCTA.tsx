@@ -21,7 +21,7 @@ const StartSellingCTA = () => {
                 <h2 className="text-h3 md:text-h2 font-bold text-white leading-tight">
                   Start Selling on <br></br> GoMall Today
                 </h2>
-                <p className="text-body-sm text-white/70 mt-2">
+                <p className="text-body-sm text-white/90 mt-2">
                   Join thousands of merchants and grow your business with our easy-to-use seller tools.
                 </p>
               </div>
@@ -37,13 +37,13 @@ const StartSellingCTA = () => {
             </div>
 
             {/* Shopping Bag Image sitting at the bottom */}
-            <div className="w-full lg:w-[440px] xl:w-[500px] shrink-0 flex  items-end self-end mt-auto">
+            {/* <div className="w-full lg:w-[440px] xl:w-[500px] shrink-0 flex  items-end self-end mt-auto">
               <img
-                src="/assets/shooping.png"
+                src="/assets/bag-back.png"
                 alt="Shopping Bag"
-                className="w-full h-auto object-contain block"
+                className="w-full h-[400px] object-contain block"
               />
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </div>

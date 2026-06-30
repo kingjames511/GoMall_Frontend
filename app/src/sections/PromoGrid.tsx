@@ -19,7 +19,7 @@ const PromoGrid = () => {
             className="relative rounded-2xl overflow-hidden min-h-[420px] lg:min-h-0 lg:row-span-2"
           >
             <img
-              src="/assets/promo-shopping-bags.jpg"
+              src="/assets/bags.png"
               alt="Shopping bags"
               className="absolute inset-0 w-full h-full object-cover"
             />
@@ -55,10 +55,10 @@ const PromoGrid = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
-            className="relative rounded-2xl overflow-hidden min-h-[200px]"
+            className="relative rounded-2xl overflow-hidden min-h-[250px]"
           >
             <img
-              src="/assets/promo-store-interior.jpg"
+              src="/assets/bags3.png"
               alt="Store interior"
               className="absolute inset-0 w-full h-full object-cover"
             />
@@ -89,10 +89,10 @@ const PromoGrid = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-            className="relative rounded-2xl overflow-hidden min-h-[200px]"
+            className="relative rounded-2xl overflow-hidden min-h-[250px]"
           >
             <img
-              src="/assets/promo-shopper.jpg"
+              src="/assets/bags2.png"
               alt="Happy shopper"
               className="absolute inset-0 w-full h-full object-cover"
             />

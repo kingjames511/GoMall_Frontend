@@ -20,10 +20,9 @@ const CustomerExperience = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-h2 text-text-primary font-bold leading-tight shrink-0 text-left"
+            className="text-xl sm:text-2xl md:text-h2 text-text-primary font-bold leading-tight text-left"
           >
-            We provide the <br />
-            best customer experiences
+            We provide the <br className="hidden sm:inline" /> best customer experiences
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}

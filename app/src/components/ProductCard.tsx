@@ -90,7 +90,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           <span className="text-sm sm:text-base md:text-lg font-bold text-[#1A1A1A]">
             {product.currentPrice}
           </span>
-          <span className="text-[10px] sm:text-xs md:text-sm text-[#9CA3AF] line-through">
+          <span className="text-[10px] sm:text-xs md:text-sm text-[#737373] line-through">
             {product.originalPrice}
           </span>
         </div>

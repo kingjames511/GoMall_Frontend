@@ -33,7 +33,7 @@ const Footer = () => {
           <h2 className="text-h2 text-white mt-3 font-bold">
             Discover Stores Near You
           </h2>
-          <p className="text-body text-white/70 mt-4 max-w-[500px] leading-relaxed">
+          <p className="text-body text-white/90 mt-4 max-w-[500px] leading-relaxed">
             Browse verified vendors and compare products from multiple stores with ease.
           </p>
           <motion.button

@@ -45,13 +45,14 @@ module.exports = {
         red: "#DC3545",
         star: "#F5A623",
         "text-primary": "#1A1A1A",
-        "text-secondary": "#6B7280",
-        "text-muted": "#9CA3AF",
+        "text-secondary": "#374151",
+        "text-muted": "#4B5563",
         "border-gray": "#E5E5E5",
         "gray-bg": "#F5F5F5",
       },
       fontFamily: {
         inter: ['Inter', 'system-ui', 'sans-serif'],
+        vietnam: ['"Be Vietnam Pro"', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'badge': ['0.6875rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.02em' }],
