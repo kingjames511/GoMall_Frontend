@@ -4,8 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Loader2, XCircle } from "lucide-react";
+import { getPasswordStrength } from "@/utils/StrongPassword";
+import { useSignupMutation } from "@/query";
 
-// ─── Zod Schema ────────────────────────────────────────────────────────────────
+// Zod Schema 
 const signUpSchema = z
   .object({
     firstName: z
@@ -39,33 +41,10 @@ const signUpSchema = z
   });
 
 type SignUpFormData = z.infer<typeof signUpSchema>;
-
-// ─── Password Strength ──────────────────────────────────────────────────────
-function getPasswordStrength(password: string): {
-  score: number;
-  label: string;
-  color: string;
-} {
-  if (!password) return { score: 0, label: "", color: "" };
-  let score = 0;
-  if (password.length >= 8) score++;
-  if (/[A-Z]/.test(password)) score++;
-  if (/[a-z]/.test(password)) score++;
-  if (/[0-9]/.test(password)) score++;
-  if (/[^A-Za-z0-9]/.test(password)) score++;
-
-  if (score <= 2) return { score, label: "Weak", color: "#DC3545" };
-  if (score <= 3) return { score, label: "Fair", color: "#E8782F" };
-  if (score <= 4) return { score, label: "Good", color: "#F5A623" };
-  return { score, label: "Strong", color: "#22A65A" };
-}
-
-// ─── Props ──────────────────────────────────────────────────────────────────
 interface SignUpPageProps {
   onNavigate?: (page: string, data?: Record<string, string>) => void;
 }
 
-// ─── Component ──────────────────────────────────────────────────────────────
 const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -85,19 +64,34 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
   const passwordValue = watch("password", "");
   const strength = getPasswordStrength(passwordValue);
 
-  const onSubmit = async (data: SignUpFormData) => {
-    setIsSubmitting(true);
-    setServerError(null);
-    try {
-      // Simulate API call
-      await new Promise((res) => setTimeout(res, 1500));
-      // On success, navigate to OTP page
-      onNavigate?.("otp", { email: data.email });
-    } catch {
+
+  const { mutate: signUp, isPending } = useSignupMutation({
+    onSuccess: (_, variables:any) => {
+      onNavigate?.("otp", {
+        email: variables.email,
+      });
+    },
+    onError: () => {
       setServerError("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    },
+  });
+
+const handleSignup = (data: SignUpFormData) => {
+  setServerError(null);
+
+  signUp({
+    email: data.email,
+    password: data.password,
+    first_name: data.firstName,
+    last_name: data.lastName,
+    phone: data.phone,
+  });
+};
+  
+
+  
+  const onSubmit = async (data: SignUpFormData) => {
+   handleSignup(data)  
   };
 
   return (

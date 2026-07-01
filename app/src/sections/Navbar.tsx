@@ -1,13 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, Link } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Heart, ShoppingCart, User, Menu, X, LogIn, UserPlus } from "lucide-react";
 import { navLinks } from "@/data/siteData";
 
-interface NavbarProps {
-  onNavigate?: (page: string) => void;
-}
-
-const Navbar = ({ onNavigate }: NavbarProps) => {
+const Navbar = () => {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,8 +37,8 @@ const Navbar = ({ onNavigate }: NavbarProps) => {
     >
       <div className="container-main h-[72px] flex items-center justify-between">
         {/* Logo */}
-        <button
-          onClick={() => onNavigate?.("home")}
+        <Link
+          to="/"
           className="flex items-center shrink-0 focus:outline-none cursor-pointer"
         >
           <img
@@ -48,7 +46,7 @@ const Navbar = ({ onNavigate }: NavbarProps) => {
             alt="GoMall"
             className="h-10 w-auto object-contain"
           />
-        </button>
+        </Link>
 
         {/* Desktop Nav Links */}
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">
@@ -59,7 +57,7 @@ const Navbar = ({ onNavigate }: NavbarProps) => {
               onClick={(e) => {
                 if (link.href === "/") {
                   e.preventDefault();
-                  onNavigate?.("home");
+                  navigate("/");
                 }
               }}
               className="text-body font-medium text-text-primary hover:text-navy transition-colors duration-200"
@@ -123,7 +121,7 @@ const Navbar = ({ onNavigate }: NavbarProps) => {
                     <button
                       onClick={() => {
                         setUserMenuOpen(false);
-                        onNavigate?.("login");
+                        navigate("/login");
                       }}
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-body text-text-primary hover:bg-gray-bg transition-colors cursor-pointer text-left"
                     >
@@ -133,7 +131,7 @@ const Navbar = ({ onNavigate }: NavbarProps) => {
                     <button
                       onClick={() => {
                         setUserMenuOpen(false);
-                        onNavigate?.("signup");
+                        navigate("/signup");
                       }}
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-body text-text-primary hover:bg-gray-bg transition-colors cursor-pointer text-left"
                     >

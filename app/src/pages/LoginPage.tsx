@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { useLoginMutation } from "@/query";
+import toast from "react-hot-toast";
 
 interface LoginPageProps {
   onNavigate?: (page: string) => void;
@@ -10,11 +12,21 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+
+  const { mutate: Login, isPending } = useLoginMutation({
+    onSuccess: () => {
+      toast.success("Login successfully!");
+      onNavigate?.("home")
+    },
+    onError: (error: any) => {
+      toast.error(error.message)
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Demo form submission
-    console.log("Logging in with:", { email, password });
+    Login({ email, password });
   };
 
   return (
@@ -147,15 +159,16 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
 
             {/* Forgot Password Link */}
             <div className="text-right pt-1">
-              <a
-                href="#forgot"
-                className="text-xs sm:text-sm text-text-secondary hover:text-text-primary transition-colors"
+              <button
+                type="button"
+                onClick={() => onNavigate?.("forgot-password")}
+                className="text-xs sm:text-sm text-text-secondary hover:text-text-primary transition-colors focus:outline-none"
               >
                 Forgot Password?{" "}
                 <span className="text-[#0B4A8F] font-bold hover:underline">
                   Click Here
                 </span>
-              </a>
+              </button>
             </div>
 
             {/* Submit Button */}
@@ -163,9 +176,10 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
               type="submit"
-              className="w-full mt-4 bg-[#0B4A8F] hover:bg-[#08376b] text-white font-semibold py-3.5 rounded-lg text-sm transition-colors duration-200 shadow-sm cursor-pointer"
+              disabled={isPending}
+              className="w-full mt-4 bg-[#0B4A8F] hover:bg-[#08376b] flex items-center justify-center  text-white font-semibold py-3.5 rounded-lg text-sm transition-colors duration-200 shadow-sm cursor-pointer"
             >
-              Login
+              {isPending ? <Loader2 size={16} className="animate-spin" /> : "Login"}
             </motion.button>
           </form>
 
