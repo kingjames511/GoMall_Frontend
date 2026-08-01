@@ -3,20 +3,21 @@ import {
   useRef,
   useEffect,
   useCallback,
-  KeyboardEvent,
-  ClipboardEvent,
 } from "react";
+import type { KeyboardEvent, ClipboardEvent } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Loader2, ArrowLeft, XCircle, RefreshCw } from "lucide-react";
+import { AxiosError } from "axios";
+import { useForgotPasswordMutation, useResetPasswordMutation, useResendOtpMutation } from "@/query";
 
-// ─── Constants ───────────────────────────────────────────────────────────────
-const OTP_LEN = 4;
+// ─── Constants 
+const OTP_LEN = 6;
 const COUNTDOWN_SEC = 60;
 
-// ─── Schemas ─────────────────────────────────────────────────────────────────
+// ─── Schemas
 const emailSchema = z.object({
   email: z.string().trim().email("Please enter a valid email address"),
 });
@@ -120,16 +121,21 @@ function StepEmail({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<EmailForm>({ resolver: zodResolver(emailSchema), mode: "onTouched" });
+
+  const { mutateAsync: forgotPassword, isPending: isSubmitting } = useForgotPasswordMutation();
 
   const onSubmit = async (data: EmailForm) => {
     setServerError(null);
     try {
-      await new Promise((res) => setTimeout(res, 1200));
+      await forgotPassword({ email: data.email });
       onSent(data.email);
-    } catch {
-      setServerError("Failed to send code. Please try again.");
+    } catch (err) {
+      const errorMsg = err instanceof AxiosError
+        ? err.response?.data?.detail?.message || err.message
+        : "Failed to send code. Please try again.";
+      setServerError(errorMsg);
     }
   };
 
@@ -234,17 +240,17 @@ function StepOTP({
   onBack,
 }: {
   email: string;
-  onVerified: () => void;
+  onVerified: (otp: string) => void;
   onBack: () => void;
 }) {
   const [digits, setDigits] = useState<string[]>(Array(OTP_LEN).fill(""));
   const [countdown, setCountdown] = useState(COUNTDOWN_SEC);
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [isResending, setIsResending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const refs = useRef<Array<HTMLInputElement | null>>(Array(OTP_LEN).fill(null));
 
   const allFilled = digits.every((d) => d !== "");
+
+  const { mutateAsync: resendOtp, isPending: isResending } = useResendOtpMutation();
 
   // countdown
   useEffect(() => {
@@ -307,37 +313,26 @@ function StepOTP({
     [digits]
   );
 
-  const handleVerify = useCallback(async () => {
-    if (!allFilled || isVerifying) return;
-    setIsVerifying(true);
-    setError(null);
-    try {
-      await new Promise((res, rej) =>
-        setTimeout(() => (digits.join("") === "0000" ? rej(new Error("expired")) : res(true)), 1400)
-      );
-      onVerified();
-    } catch (err: unknown) {
-      const msg = (err as Error).message;
-      setError(msg === "expired" ? "This code has expired. Please resend." : "Invalid code. Please try again.");
-      setDigits(Array(OTP_LEN).fill(""));
-      refs.current[0]?.focus();
-    } finally {
-      setIsVerifying(false);
-    }
-  }, [allFilled, isVerifying, digits, onVerified]);
+  const handleVerify = useCallback(() => {
+    if (!allFilled) return;
+    onVerified(digits.join(""));
+  }, [allFilled, digits, onVerified]);
 
   const handleResend = useCallback(async () => {
     if (countdown > 0 || isResending) return;
-    setIsResending(true);
     setError(null);
     setDigits(Array(OTP_LEN).fill(""));
     try {
-      await new Promise((res) => setTimeout(res, 900));
+      await resendOtp({ email });
       setCountdown(COUNTDOWN_SEC);
       refs.current[0]?.focus();
-    } catch { setError("Failed to resend. Please try again."); }
-    finally { setIsResending(false); }
-  }, [countdown, isResending]);
+    } catch (err) {
+      const errorMsg = err instanceof AxiosError
+        ? err.response?.data?.detail?.message || err.message
+        : "Failed to resend. Please try again.";
+      setError(errorMsg);
+    }
+  }, [countdown, isResending, email, resendOtp]);
 
   return (
     <motion.div
@@ -394,10 +389,15 @@ function StepOTP({
             onKeyDown={(e) => handleKeyDown(i, e)}
             onPaste={handlePaste}
             onFocus={(e) => e.target.select()}
-            disabled={isVerifying}
+            disabled={isResending}
             className={`w-14 h-16 sm:w-16 sm:h-18 text-center text-2xl font-bold rounded-xl border-2 transition-all outline-none bg-white caret-transparent
-              ${digit ? "border-[#0B2D6E] text-[#0B2D6E]" : "border-gray-200 text-gray-900"}
-              focus:border-[#0B2D6E] focus:ring-2 focus:ring-[#0B2D6E]/15
+              ${error
+                ? "border-red-500 text-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/15"
+                : digit
+                  ? "border-[#0B2D6E] text-[#0B2D6E]"
+                  : "border-gray-200 text-gray-900"
+              }
+              ${!error && "focus:border-[#0B2D6E] focus:ring-2 focus:ring-[#0B2D6E]/15"}
               disabled:opacity-50`}
           />
         ))}
@@ -424,14 +424,13 @@ function StepOTP({
       <motion.button
         type="button"
         onClick={handleVerify}
-        disabled={!allFilled || isVerifying}
-        whileHover={allFilled && !isVerifying ? { scale: 1.01 } : {}}
-        whileTap={allFilled && !isVerifying ? { scale: 0.99 } : {}}
+        disabled={!allFilled || isResending}
+        whileHover={allFilled && !isResending ? { scale: 1.01 } : {}}
+        whileTap={allFilled && !isResending ? { scale: 0.99 } : {}}
         className={`w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-lg text-sm transition-all duration-200
-          ${allFilled && !isVerifying ? "bg-[#0B2D6E] hover:bg-[#091f50] text-white cursor-pointer" : "bg-[#B8C5D6] text-white cursor-not-allowed"}`}
-        aria-busy={isVerifying}
+          ${allFilled && !isResending ? "bg-[#0B2D6E] hover:bg-[#091f50] text-white cursor-pointer" : "bg-[#B8C5D6] text-white cursor-not-allowed"}`}
       >
-        {isVerifying ? <><Loader2 size={16} className="animate-spin" /> Verifying…</> : "Continue"}
+        Continue
       </motion.button>
 
       <div className="flex justify-center mt-5">
@@ -447,11 +446,15 @@ function StepOTP({
   );
 }
 
-// ─── Step 3 – New Password ───────────────────────────────────────────────────
+// ─── Step 3 – New Password
 function StepReset({
+  email,
+  otp,
   onDone,
   onBack,
 }: {
+  email: string;
+  otp: string;
   onDone: () => void;
   onBack: () => void;
 }) {
@@ -462,16 +465,25 @@ function StepReset({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<PasswordForm>({ resolver: zodResolver(newPasswordSchema), mode: "onTouched" });
 
-  const onSubmit = async () => {
+  const { mutateAsync: resetPassword, isPending: isSubmitting } = useResetPasswordMutation();
+
+  const onSubmit = async (data: PasswordForm) => {
     setServerError(null);
     try {
-      await new Promise((res) => setTimeout(res, 1300));
+      await resetPassword({
+        email,
+        otp,
+        new_password: data.password,
+      });
       onDone();
-    } catch {
-      setServerError("Something went wrong. Please try again.");
+    } catch (err) {
+      const errorMsg = err instanceof AxiosError
+        ? err.response?.data?.detail?.message || err.message
+        : "Something went wrong. Please try again.";
+      setServerError(errorMsg);
     }
   };
 
@@ -605,6 +617,7 @@ function StepReset({
 const ForgotPasswordPage = ({ onNavigate }: ForgotPasswordPageProps) => {
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
 
   const goBack = () => {
     if (step === "email") onNavigate?.("login");
@@ -636,13 +649,15 @@ const ForgotPasswordPage = ({ onNavigate }: ForgotPasswordPageProps) => {
             <StepOTP
               key="otp"
               email={email}
-              onVerified={() => setStep("reset")}
+              onVerified={(code) => { setOtp(code); setStep("reset"); }}
               onBack={goBack}
             />
           )}
           {step === "reset" && (
             <StepReset
               key="reset"
+              email={email}
+              otp={otp}
               onDone={() => onNavigate?.("login")}
               onBack={goBack}
             />

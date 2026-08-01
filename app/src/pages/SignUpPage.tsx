@@ -44,11 +44,9 @@ type SignUpFormData = z.infer<typeof signUpSchema>;
 interface SignUpPageProps {
   onNavigate?: (page: string, data?: Record<string, string>) => void;
 }
-
 const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
   const {
@@ -64,39 +62,32 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
   const passwordValue = watch("password", "");
   const strength = getPasswordStrength(passwordValue);
 
-
   const { mutate: signUp, isPending } = useSignupMutation({
-    onSuccess: (_, variables:any) => {
+    onSuccess: (_data, variables) => {
       onNavigate?.("otp", {
         email: variables.email,
       });
     },
-    onError: () => {
-      setServerError("Something went wrong. Please try again.");
+    onError: (error) => {
+      const message = error.response?.data?.detail?.message ?? "Something went wrong. Please try again.";
+      setServerError(message);
     },
   });
 
-const handleSignup = (data: SignUpFormData) => {
-  setServerError(null);
+  const onSubmit = (data: SignUpFormData) => {
+    setServerError(null);
 
-  signUp({
-    email: data.email,
-    password: data.password,
-    first_name: data.firstName,
-    last_name: data.lastName,
-    phone: data.phone,
-  });
-};
-  
-
-  
-  const onSubmit = async (data: SignUpFormData) => {
-   handleSignup(data)  
+    signUp({
+      email: data.email,
+      password: data.password,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      phone: data.phone,
+    });
   };
-
   return (
     <div className="h-screen w-full bg-white flex flex-col lg:flex-row overflow-hidden p-[2px] gap-0">
-      {/* ── Left Panel ─────────────────────────────────────────── */}
+      {/* ── Left Panel */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -107,7 +98,7 @@ const handleSignup = (data: SignUpFormData) => {
         <img
           src="/assets/signup.png"
           alt="GoMall Shopping Experience"
-          className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          className="absolute inset-0 z-0 object-cover object-center w-full h-full"
         />
 
         {/* Gradient overlay */}
@@ -123,19 +114,19 @@ const handleSignup = (data: SignUpFormData) => {
         <div className="relative z-20 flex items-center">
           <button
             onClick={() => onNavigate?.("home")}
-            className="focus:outline-none cursor-pointer"
+            className="cursor-pointer focus:outline-none"
             aria-label="Go to home"
           >
             <img
               src="/assets/logo.png"
               alt="GoMall Logo"
-              className="h-10 md:h-12 w-auto object-contain brightness-0 invert"
+              className="object-contain w-auto h-10 md:h-12 brightness-0 invert"
             />
           </button>
         </div>
 
         {/* Hero copy */}
-        <div className="relative z-20 my-auto py-8">
+        <div className="relative z-20 py-8 my-auto">
           <h1 className="text-4xl lg:text-[44px] font-extrabold text-white leading-[1.15] tracking-tight max-w-[460px]">
             Shop Smarter with GoMalL
           </h1>
@@ -146,30 +137,30 @@ const handleSignup = (data: SignUpFormData) => {
         </div>
 
         {/* Testimonial card */}
-        <div className="relative z-20 bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/15 shadow-lg">
-          <p className="text-white/90 text-sm leading-relaxed">
+        <div className="relative z-20 p-5 border shadow-lg bg-white/10 backdrop-blur-md rounded-2xl border-white/15">
+          <p className="text-sm leading-relaxed text-white/90">
             GoMall makes shopping so convenient. I can compare prices across
             different stores and always find the best deals.
           </p>
           <div className="flex items-center gap-3 mt-4">
-            <div className="w-9 h-9 rounded-full bg-white/30 flex items-center justify-center overflow-hidden flex-shrink-0">
+            <div className="flex items-center justify-center flex-shrink-0 overflow-hidden rounded-full w-9 h-9 bg-white/30">
               <img
                 src="/assets/promo-shopper.jpg"
                 alt="Amaka C."
-                className="w-full h-full object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
             <div>
-              <p className="text-white text-sm font-bold leading-tight">
+              <p className="text-sm font-bold leading-tight text-white">
                 Amaka C.
               </p>
-              <p className="text-white/70 text-xs">Buyer, Lagos</p>
+              <p className="text-xs text-white/70">Buyer, Lagos</p>
             </div>
           </div>
         </div>
       </motion.div>
 
-      {/* ── Right Panel ────────────────────────────────────────── */}
+      {/* ── Right Panel */}
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -178,11 +169,11 @@ const handleSignup = (data: SignUpFormData) => {
       >
         <div className="max-w-[480px] w-full mx-auto">
           {/* Heading */}
-          <div className="text-center mb-4">
+          <div className="mb-4 text-center">
             <h2 className="text-2xl sm:text-[26px] font-bold text-gray-900 leading-tight">
               Let's Get Started
             </h2>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="mt-1 text-sm text-gray-500">
               Please enter the information below
             </p>
           </div>
@@ -194,7 +185,7 @@ const handleSignup = (data: SignUpFormData) => {
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
-                className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 mb-5"
+                className="flex items-center gap-2 px-4 py-3 mb-5 text-sm text-red-700 border border-red-200 rounded-lg bg-red-50"
                 role="alert"
               >
                 <XCircle size={16} className="flex-shrink-0" />
@@ -215,7 +206,7 @@ const handleSignup = (data: SignUpFormData) => {
               <div>
                 <label
                   htmlFor="firstName"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block mb-1 text-sm font-medium text-gray-700"
                 >
                   First Name
                 </label>
@@ -243,7 +234,7 @@ const handleSignup = (data: SignUpFormData) => {
               <div>
                 <label
                   htmlFor="lastName"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block mb-1 text-sm font-medium text-gray-700"
                 >
                   Last Name
                 </label>
@@ -272,7 +263,7 @@ const handleSignup = (data: SignUpFormData) => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Email Address
               </label>
@@ -300,7 +291,7 @@ const handleSignup = (data: SignUpFormData) => {
             <div>
               <label
                 htmlFor="phone"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Phone Number
               </label>
@@ -328,7 +319,7 @@ const handleSignup = (data: SignUpFormData) => {
             <div>
               <label
                 htmlFor="address"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Address
               </label>
@@ -356,7 +347,7 @@ const handleSignup = (data: SignUpFormData) => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Password
               </label>
@@ -395,7 +386,7 @@ const handleSignup = (data: SignUpFormData) => {
                     {[1, 2, 3, 4, 5].map((i) => (
                       <div
                         key={i}
-                        className="h-1 flex-1 rounded-full transition-all duration-300"
+                        className="flex-1 h-1 transition-all duration-300 rounded-full"
                         style={{
                           backgroundColor:
                             i <= strength.score ? strength.color : "#E5E7EB",
@@ -404,7 +395,7 @@ const handleSignup = (data: SignUpFormData) => {
                     ))}
                   </div>
                   <p
-                    className="text-xs mt-1 font-medium"
+                    className="mt-1 text-xs font-medium"
                     style={{ color: strength.color }}
                   >
                     {strength.label}
@@ -423,7 +414,7 @@ const handleSignup = (data: SignUpFormData) => {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Confirm Password
               </label>
@@ -465,10 +456,10 @@ const handleSignup = (data: SignUpFormData) => {
             <div>
               <label
                 htmlFor="referralCode"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Referral Code{" "}
-                <span className="text-gray-400 font-normal">(If any)</span>
+                <span className="font-normal text-gray-400">(If any)</span>
               </label>
               <input
                 id="referralCode"
@@ -485,13 +476,13 @@ const handleSignup = (data: SignUpFormData) => {
             <div className="pt-0.5">
               <motion.button
                 type="submit"
-                disabled={isSubmitting}
-                whileHover={!isSubmitting ? { scale: 1.01 } : {}}
-                whileTap={!isSubmitting ? { scale: 0.99 } : {}}
+                disabled={isPending}
+                whileHover={!isPending ? { scale: 1.01 } : {}}
+                whileTap={!isPending ? { scale: 0.99 } : {}}
                 className="w-full flex items-center justify-center gap-2 bg-[#0B2D6E] hover:bg-[#091f50] disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg text-sm transition-colors duration-200 shadow-sm cursor-pointer"
-                aria-busy={isSubmitting}
+                aria-busy={isPending}
               >
-                {isSubmitting ? (
+                {isPending ? (
                   <>
                     <Loader2 size={16} className="animate-spin" />
                     Creating account…
@@ -504,7 +495,7 @@ const handleSignup = (data: SignUpFormData) => {
           </form>
 
           {/* Login link */}
-          <p className="text-center text-sm text-gray-500 mt-4">
+          <p className="mt-4 text-sm text-center text-gray-500">
             Already have an account?{" "}
             <button
               type="button"

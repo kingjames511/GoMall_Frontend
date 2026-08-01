@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Star, Package, Store } from "lucide-react";
-import type { Store as StoreType } from "@/data/siteData";
+import type { Store as StoreType } from "@/types/store";
+import { formatCount } from "@/utils/format";
 
 interface StoreCardProps {
   store: StoreType;
@@ -18,24 +19,24 @@ const StoreCard = ({ store, index }: StoreCardProps) => {
         delay: index * 0.08,
         ease: [0.4, 0, 0.2, 1],
       }}
-      className="bg-white border border-border-gray rounded-2xl p-5 flex flex-col justify-between w-full shadow-sm hover:shadow-md transition-all duration-300"
+      className="bg-white border border-border-gray rounded-2xl p-3 sm:p-5 flex flex-col justify-between w-full shadow-sm hover:shadow-md transition-all duration-300"
     >
-      <div className="flex items-start gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
         {/* Large Blue Avatar Circle */}
-        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#3B82F6] flex items-center justify-center shrink-0 text-white">
-          <Store className="w-7 h-7 sm:w-8 sm:h-8" />
+        <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-[#3B82F6] flex items-center justify-center shrink-0 text-white mx-auto sm:mx-0">
+          <Store className="w-5 h-5 sm:w-8 sm:h-8" />
         </div>
 
         {/* Content Area */}
         <div className="flex-1 min-w-0">
           {/* Title and Verification Badge */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-body font-bold text-text-primary truncate">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-center sm:justify-start">
+            <h3 className="text-[13px] sm:text-body font-bold text-text-primary truncate text-center sm:text-left">
               {store.name}
             </h3>
-            <span className="flex items-center gap-1 bg-[#22A65A]/10 text-[#22A65A] text-[10px] sm:text-badge px-2 py-0.5 rounded-full font-semibold shrink-0">
+            <span className="flex items-center gap-1 bg-[#22A65A]/10 text-[#22A65A] text-[9px] sm:text-badge px-1.5 sm:px-2 py-0.5 rounded-full font-semibold shrink-0">
               <svg
-                className="w-3 h-3 text-[#22A65A]"
+                className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#22A65A]"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -49,23 +50,23 @@ const StoreCard = ({ store, index }: StoreCardProps) => {
             </span>
           </div>
 
-          {/* Description - Un-truncated to allow wrapping */}
-          <p className="text-caption text-text-secondary mt-1 leading-normal">
+          {/* Description */}
+          <p className="text-[11px] sm:text-caption text-text-secondary mt-1 leading-normal line-clamp-2 text-center sm:text-left">
             {store.description}
           </p>
 
           {/* Metadata: Ratings & Products */}
-          <div className="flex items-center gap-3.5 mt-3 text-caption text-text-secondary font-medium">
-            <span className="flex items-center gap-1">
-              <Star size={13} className="fill-[#F5A623] text-[#F5A623]" />
+          <div className="flex items-center justify-center sm:justify-start gap-2 sm:gap-3.5 mt-2 sm:mt-3 text-[11px] sm:text-caption text-text-secondary font-medium">
+            <span className="flex items-center gap-0.5 sm:gap-1">
+              <Star size={11} className="fill-[#F5A623] text-[#F5A623]" />
               <span className="text-text-primary">{store.rating}</span>
-              <span className="text-text-muted text-[11px]">
-                ({store.reviewCount})
+              <span className="text-text-muted text-[10px] hidden sm:inline">
+                ({formatCount(store.reviewCount)})
               </span>
             </span>
-            <span className="flex items-center gap-1">
-              <Package size={13} className="text-[#8E5A36]" />
-              <span>{store.productCount} Products</span>
+            <span className="flex items-center gap-0.5 sm:gap-1">
+              <Package size={11} className="text-[#8E5A36]" />
+              <span>{formatCount(store.productCount)}</span>
             </span>
           </div>
         </div>

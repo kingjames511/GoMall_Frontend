@@ -15,8 +15,7 @@ export default function Home() {
         <>
             <div className="min-h-screen bg-white font-inter">
                 <>
-                    <TopBar />
-                    <Navbar />
+                                        <Navbar />
                     <main>
                         <HeroSection />
                         <PromoGrid />

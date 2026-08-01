@@ -3,12 +3,11 @@ import {
   useRef,
   useEffect,
   useCallback,
-  KeyboardEvent,
-  ClipboardEvent,
 } from "react";
+import type { KeyboardEvent, ClipboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, X, CheckCircle2, RefreshCw } from "lucide-react";
-
+import { useVerifyOtpMutation, useResendOtpMutation } from "@/query";
 // ─── Constants ──────────────────────────────────────────────────────────────
 const OTP_LENGTH = 6;
 const RESEND_COUNTDOWN = 60; // seconds
@@ -22,8 +21,6 @@ interface OTPPageProps {
 // ─── Component ──────────────────────────────────────────────────────────────
 const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
   const [digits, setDigits] = useState<string[]>(Array(OTP_LENGTH).fill(""));
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [isResending, setIsResending] = useState(false);
   const [countdown, setCountdown] = useState(RESEND_COUNTDOWN);
   const [error, setError] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -48,13 +45,13 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
     return () => clearInterval(id);
   }, [countdown]);
 
-  // ── Auto-dismiss banner ──────────────────────────────────────────────────
+  // ── Auto-dismiss banner 
   useEffect(() => {
     const id = setTimeout(() => setShowBanner(false), 5000);
     return () => clearTimeout(id);
   }, []);
 
-  // ── Auto-focus first input ───────────────────────────────────────────────
+  // ── Auto-focus first input
   useEffect(() => {
     inputRefs.current[0]?.focus();
   }, []);
@@ -70,7 +67,7 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
   const allFilled = digits.every((d) => d !== "");
   const otpValue = digits.join("");
 
-  // ── Handle single digit change ───────────────────────────────────────────
+  // ── Handle single digit change
   const handleChange = useCallback(
     (index: number, value: string) => {
       const numeric = value.replace(/\D/g, "");
@@ -101,7 +98,7 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
     [digits]
   );
 
-  // ── Keyboard navigation ──────────────────────────────────────────────────
+  // ── Keyboard navigation
   const handleKeyDown = useCallback(
     (index: number, e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Backspace") {
@@ -129,7 +126,7 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
     [digits, allFilled]
   );
 
-  // ── Paste handler ────────────────────────────────────────────────────────
+  // ── Paste handler 
   const handlePaste = useCallback(
     (e: ClipboardEvent<HTMLInputElement>) => {
       e.preventDefault();
@@ -147,62 +144,60 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
     [digits]
   );
 
-  // ── Verify ───────────────────────────────────────────────────────────────
-  const handleVerify = useCallback(async () => {
-    if (!allFilled || isVerifying) return;
-    setIsVerifying(true);
-    setError(null);
-    try {
-      // Simulate verification API
-      await new Promise((res, rej) =>
-        setTimeout(() => {
-          // Simulate wrong OTP for demo (correct OTP = "123456")
-          if (otpValue === "000000") {
-            rej(new Error("expired"));
-          } else {
-            res(true);
-          }
-        }, 1500)
-      );
+
+  const { mutate: verifyOtp, isPending: isVerifying } = useVerifyOtpMutation({
+    onSuccess: () => {
       setShowSuccess(true);
       setTimeout(() => onNavigate?.("home"), 2000);
-    } catch (err: unknown) {
-      const msg = (err as Error).message;
-      if (msg === "expired") {
-        setError("This OTP has expired. Please request a new one.");
+    },
+    onError: (error) => {
+      const code = error.response?.data?.detail?.code;
+      const message = error.response?.data?.detail?.message ?? "Invalid code. Please check and try again.";
+
+      if (code === "OTP_MAX_ATTEMPTS") {
+        setError(message); // e.g. "Too many attempts. Try again in 10 minutes."
       } else {
-        setError("Invalid code. Please check and try again.");
+        // covers OTP_EXPIRED, OTP_INVALID, REGISTRATION_EXPIRED, etc.
+        setError(message);
       }
-      // Reset digits on error
+
       setDigits(Array(OTP_LENGTH).fill(""));
       inputRefs.current[0]?.focus();
-    } finally {
-      setIsVerifying(false);
-    }
-  }, [allFilled, isVerifying, otpValue, onNavigate]);
+    },
+  });
 
-  // ── Resend ───────────────────────────────────────────────────────────────
-  const handleResend = useCallback(async () => {
-    if (countdown > 0 || isResending) return;
-    setIsResending(true);
+  // ── Verify
+
+  const handleVerify = useCallback(() => {
+    if (!allFilled || isVerifying) return;
     setError(null);
-    setDigits(Array(OTP_LENGTH).fill(""));
-    try {
-      await new Promise((res) => setTimeout(res, 1000));
+    verifyOtp({ email, otp: otpValue });
+  }, [allFilled, isVerifying, otpValue, email, verifyOtp]);
+
+  const { mutate: resendOtp, isPending: isResending } = useResendOtpMutation({
+    onSuccess: () => {
       setCountdown(RESEND_COUNTDOWN);
       setShowBanner(true);
       setTimeout(() => setShowBanner(false), 5000);
       inputRefs.current[0]?.focus();
-    } catch {
-      setError("Failed to resend code. Please try again.");
-    } finally {
-      setIsResending(false);
+    },
+    onError: (error) => {
+      const message = error.response?.data?.detail?.message ?? "Failed to resend code. Please try again.";
+      setError(message);
     }
-  }, [countdown, isResending]);
+  });
+
+  // ── Resend
+  const handleResend = useCallback(() => {
+    if (countdown > 0 || isResending) return;
+    setError(null);
+    setDigits(Array(OTP_LENGTH).fill(""));
+    resendOtp({ email });
+  }, [countdown, isResending, email, resendOtp]);
 
   return (
     <div className="h-screen w-full bg-white flex flex-col lg:flex-row overflow-hidden p-[2px] gap-0">
-      {/* ── Left Panel ─────────────────────────────────────────── */}
+      {/* ── Left Panel */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -212,7 +207,7 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
         <img
           src="/assets/signup.png"
           alt="GoMall Shopping Experience"
-          className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          className="absolute inset-0 z-0 object-cover object-center w-full h-full"
         />
         <div
           className="absolute inset-0 z-10"
@@ -226,19 +221,19 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
         <div className="relative z-20 flex items-center">
           <button
             onClick={() => onNavigate?.("home")}
-            className="focus:outline-none cursor-pointer"
+            className="cursor-pointer focus:outline-none"
             aria-label="Go to home"
           >
             <img
               src="/assets/logo.png"
               alt="GoMall Logo"
-              className="h-10 md:h-12 w-auto object-contain brightness-0 invert"
+              className="object-contain w-auto h-10 md:h-12 brightness-0 invert"
             />
           </button>
         </div>
 
         {/* Hero copy */}
-        <div className="relative z-20 my-auto py-8">
+        <div className="relative z-20 py-8 my-auto">
           <h1 className="text-4xl lg:text-[44px] font-extrabold text-white leading-[1.15] tracking-tight max-w-[460px]">
             Shop Smarter with GoMalL
           </h1>
@@ -249,30 +244,30 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
         </div>
 
         {/* Testimonial */}
-        <div className="relative z-20 bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/15 shadow-lg">
-          <p className="text-white/90 text-sm leading-relaxed">
+        <div className="relative z-20 p-5 border shadow-lg bg-white/10 backdrop-blur-md rounded-2xl border-white/15">
+          <p className="text-sm leading-relaxed text-white/90">
             GoMall makes shopping so convenient. I can compare prices across
             different stores and always find the best deals.
           </p>
           <div className="flex items-center gap-3 mt-4">
-            <div className="w-9 h-9 rounded-full bg-white/30 flex items-center justify-center overflow-hidden flex-shrink-0">
+            <div className="flex items-center justify-center flex-shrink-0 overflow-hidden rounded-full w-9 h-9 bg-white/30">
               <img
                 src="/assets/promo-shopper.jpg"
                 alt="Amaka C."
-                className="w-full h-full object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
             <div>
-              <p className="text-white text-sm font-bold leading-tight">
+              <p className="text-sm font-bold leading-tight text-white">
                 Amaka C.
               </p>
-              <p className="text-white/70 text-xs">Buyer, Lagos</p>
+              <p className="text-xs text-white/70">Buyer, Lagos</p>
             </div>
           </div>
         </div>
       </motion.div>
 
-      {/* ── Right Panel ────────────────────────────────────────── */}
+      {/* ── Right Panel*/}
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -293,12 +288,12 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
             >
               {/* Green dot */}
               <div className="flex-shrink-0 mt-0.5">
-                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-green-100">
-                  <span className="block h-2 w-2 rounded-full bg-green-500" />
+                <span className="flex items-center justify-center w-4 h-4 bg-green-100 rounded-full">
+                  <span className="block w-2 h-2 bg-green-500 rounded-full" />
                 </span>
               </div>
               {/* Left accent bar */}
-              <div className="absolute left-0 top-3 bottom-3 w-1 bg-green-500 rounded-full" />
+              <div className="absolute left-0 w-1 bg-green-500 rounded-full top-3 bottom-3" />
               <div className="flex-1">
                 <p className="text-sm font-semibold text-gray-800">
                   Confirmation code sent!
@@ -310,7 +305,7 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
               <button
                 type="button"
                 onClick={() => setShowBanner(false)}
-                className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none"
+                className="flex-shrink-0 text-gray-400 transition-colors hover:text-gray-600 focus:outline-none"
                 aria-label="Dismiss notification"
               >
                 <X size={16} />
@@ -319,10 +314,10 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
           )}
         </AnimatePresence>
 
-        {/* ── OTP Form ──────────────────────────────────────────── */}
+        {/* ── OTP Form  */}
         <div className="max-w-[480px] w-full mx-auto flex flex-col items-center">
           {/* Heading */}
-          <div className="text-center mb-6">
+          <div className="mb-6 text-center">
             <h2 className="text-2xl sm:text-[28px] font-bold text-gray-900 leading-tight">
               Enter OTP
             </h2>
@@ -341,7 +336,7 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
-                className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 mb-5 w-full"
+                className="flex items-center w-full gap-2 px-4 py-3 mb-5 text-sm text-red-700 border border-red-200 rounded-lg bg-red-50"
                 role="alert"
                 aria-live="assertive"
               >
@@ -353,7 +348,7 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
 
           {/* OTP inputs */}
           <div
-            className="flex items-center gap-3 sm:gap-4 mb-6"
+            className="flex items-center gap-3 mb-6 sm:gap-4"
             role="group"
             aria-label="Enter 6-digit OTP"
           >
@@ -380,12 +375,13 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
                   w-12 h-14 sm:w-14 sm:h-16 text-center text-xl font-bold rounded-xl border-2
                   transition-all duration-150 outline-none bg-white
                   caret-transparent select-all
-                  ${
-                    digit
+                  ${error
+                    ? "border-red-500 text-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/15"
+                    : digit
                       ? "border-[#0B2D6E] text-[#0B2D6E]"
                       : "border-gray-200 text-gray-900"
                   }
-                  focus:border-[#0B2D6E] focus:ring-2 focus:ring-[#0B2D6E]/15
+                  ${!error && "focus:border-[#0B2D6E] focus:ring-2 focus:ring-[#0B2D6E]/15"}
                   disabled:opacity-50 disabled:cursor-not-allowed
                 `}
               />
@@ -399,10 +395,9 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
               onClick={handleResend}
               disabled={countdown > 0 || isResending}
               className={`flex items-center gap-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2D6E] rounded
-                ${
-                  countdown === 0 && !isResending
-                    ? "text-[#0B2D6E] hover:text-[#091f50] cursor-pointer"
-                    : "text-gray-400 cursor-not-allowed"
+                ${countdown === 0 && !isResending
+                  ? "text-[#0B2D6E] hover:text-[#091f50] cursor-pointer"
+                  : "text-gray-400 cursor-not-allowed"
                 }`}
               aria-disabled={countdown > 0 || isResending}
               aria-label={
@@ -433,10 +428,9 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
             whileHover={allFilled && !isVerifying ? { scale: 1.01 } : {}}
             whileTap={allFilled && !isVerifying ? { scale: 0.99 } : {}}
             className={`w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-lg text-sm transition-all duration-200 shadow-sm
-              ${
-                allFilled && !isVerifying
-                  ? "bg-[#0B2D6E] hover:bg-[#091f50] text-white cursor-pointer"
-                  : "bg-[#B8C5D6] text-white cursor-not-allowed"
+              ${allFilled && !isVerifying
+                ? "bg-[#0B2D6E] hover:bg-[#091f50] text-white cursor-pointer"
+                : "bg-[#B8C5D6] text-white cursor-not-allowed"
               }`}
             aria-busy={isVerifying}
             aria-disabled={!allFilled || isVerifying}
@@ -453,14 +447,14 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
         </div>
       </motion.div>
 
-      {/* ── Success overlay ────────────────────────────────────── */}
+      {/* ── Success overlay */}
       <AnimatePresence>
         {showSuccess && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center gap-4"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-white/90 backdrop-blur-sm"
             role="status"
             aria-live="polite"
           >

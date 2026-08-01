@@ -1,7 +1,10 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Store as StoreIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import StoreCard from "@/components/StoreCard";
-import { stores } from "@/data/siteData";
+import type { Store } from "@/types/store";
+
+// TODO: replace with stores fetched from the API
+const stores: Store[] = [];
 
 const PopularStores = () => {
   return (
@@ -26,11 +29,23 @@ const PopularStores = () => {
         </motion.div>
 
         {/* Store Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {stores.map((store, index) => (
-            <StoreCard key={store.id} store={store} index={index} />
-          ))}
-        </div>
+        {stores.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {stores.map((store, index) => (
+              <StoreCard key={store.id} store={store} index={index} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <StoreIcon className="w-12 h-12 text-text-muted mb-4" />
+            <p className="text-body font-medium text-text-primary">
+              No stores yet
+            </p>
+            <p className="text-caption text-text-secondary mt-1">
+              Popular stores will appear here soon.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,7 +1,10 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ShoppingCart, Bell, Heart } from "lucide-react";
-import type { Product } from "@/data/siteData";
+import toast from "react-hot-toast";
+import type { Product } from "@/types/product";
+import { useAppContext } from "@/context/AppContext";
+import { useCart } from "@/query/cart";
+import { formatPrice } from "@/utils/format";
 
 interface ProductCardProps {
   product: Product;
@@ -9,7 +12,9 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, index }: ProductCardProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { toggleWishlist, isInWishlist } = useAppContext();
+  const { addItem } = useCart();
+  const isFavorite = isInWishlist(product.id);
 
   return (
     <motion.div
@@ -37,7 +42,13 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            setIsFavorite(!isFavorite);
+            toggleWishlist(product);
+            const active = isInWishlist(product.id);
+            if (active) {
+              toast.success(`Removed ${product.name} from wishlist`);
+            } else {
+              toast.success(`Added ${product.name} to wishlist`);
+            }
           }}
           className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/30 backdrop-blur-[2px] flex items-center justify-center text-white cursor-pointer hover:bg-black/40 transition-colors duration-200 z-10"
           aria-label="Add to favorites"
@@ -88,10 +99,10 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
         {/* Price */}
         <div className="flex items-baseline gap-2 mt-2">
           <span className="text-sm sm:text-base md:text-lg font-bold text-[#1A1A1A]">
-            {product.currentPrice}
+            {formatPrice(product.currentPrice)}
           </span>
           <span className="text-[10px] sm:text-xs md:text-sm text-[#737373] line-through">
-            {product.originalPrice}
+            {formatPrice(product.originalPrice)}
           </span>
         </div>
 
@@ -102,9 +113,22 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
 
         {/* Action Button */}
         <motion.button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (product.inStock) {
+              // addItem redirects to login if unauthenticated; only toast on a real add.
+              const added = addItem(product.id, 1);
+              if (added) {
+                toast.success(`Added ${product.name} to cart!`);
+              }
+            } else {
+              toast.error(`${product.name} is out of stock`);
+            }
+          }}
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
-          className="mt-3.5 w-full flex items-center justify-center gap-2 py-2 border-2 border-[#054182] rounded-md font-semibold text-[#0B1F3F] hover:bg-[#054182] hover:text-white transition-all duration-200 text-[11px] sm:text-xs md:text-sm"
+          className="mt-3.5 w-full flex items-center justify-center gap-2 py-2 border-2 border-[#054182] rounded-md font-semibold text-[#0B1F3F] hover:bg-[#054182] hover:text-white transition-all duration-200 text-[11px] sm:text-xs md:text-sm cursor-pointer"
         >
           {product.inStock ? (
             <>

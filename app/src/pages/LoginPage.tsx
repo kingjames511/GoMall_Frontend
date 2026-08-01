@@ -6,21 +6,23 @@ import toast from "react-hot-toast";
 
 interface LoginPageProps {
   onNavigate?: (page: string) => void;
+  redirectTo?: string | null;
 }
 
 const LoginPage = ({ onNavigate }: LoginPageProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
 
   const { mutate: Login, isPending } = useLoginMutation({
     onSuccess: () => {
       toast.success("Login successfully!");
-      onNavigate?.("home")
+      onNavigate?.("home");
     },
-    onError: (error: any) => {
-      toast.error(error.message)
+    onError: (error) => {
+      const message = error.response?.data?.detail?.message ?? "Something went wrong. Please try again.";
+      toast.error(message);
     },
   });
 
@@ -30,20 +32,20 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col lg:flex-row overflow-x-hidden p-[2px] gap-6 lg:gap-0">
+    <div className="min-h-screen w-full bg-white flex flex-col lg:flex-row overflow-x-hidden p-[2px] gap-0">
 
       {/* Left Side: Marketing Card Banner (Spans full height with 2px padding) */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full lg:w-1/2 xl:w-[50%] relative rounded-[10px] lg:rounded-[20px] overflow-hidden min-h-[520px] lg:min-h-[calc(100vh-4px)] flex flex-col justify-between p-8 sm:p-10 lg:p-12 text-white shadow-md"
+        className="hidden lg:flex w-full lg:w-1/2 xl:w-[50%] relative rounded-[20px] overflow-hidden lg:min-h-[calc(100vh-4px)] flex-col justify-between p-8 sm:p-10 lg:p-12 text-white shadow-md"
       >
         {/* Background Image */}
         <img
           src="/assets/login-picture.png"
           alt="GoMall Shopping Experience"
-          className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          className="absolute inset-0 z-0 object-cover object-center w-full h-full"
         />
 
         {/* Gradient Overlay for legibility */}
@@ -59,18 +61,18 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
         <div className="relative z-20 flex items-center">
           <button
             onClick={() => onNavigate?.("home")}
-            className="focus:outline-none cursor-pointer"
+            className="cursor-pointer focus:outline-none"
           >
             <img
               src="/assets/logo.png"
               alt="GoMall Logo"
-              className="h-10 md:h-12 w-auto object-contain brightness-0 invert"
+              className="object-contain w-auto h-10 md:h-12 brightness-0 invert"
             />
           </button>
         </div>
 
         {/* Middle Content: Title and Subtitle */}
-        <div className="relative z-20 my-auto py-8">
+        <div className="relative z-20 py-8 my-auto">
           <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-white leading-[1.15] tracking-tight max-w-[460px]">
             Everything You Need, One Marketplace
           </h1>
@@ -80,11 +82,11 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
         </div>
 
         {/* Bottom Card: GoMall Benefits */}
-        <div className="relative z-20 bg-white/10 backdrop-blur-md rounded-2xl p-5 md:p-6 border border-white/15 shadow-lg">
-          <span className="text-orange text-xs font-bold tracking-wider uppercase">
+        <div className="relative z-20 p-5 border shadow-lg bg-white/10 backdrop-blur-md rounded-2xl md:p-6 border-white/15">
+          <span className="text-xs font-bold tracking-wider uppercase text-orange">
             GoMaLL Benefits
           </span>
-          <h3 className="text-white text-base md:text-lg font-bold mt-1">
+          <h3 className="mt-1 text-base font-bold text-white md:text-lg">
             Compare Prices Across Multiple Stores
           </h3>
           <p className="text-white/85 text-xs md:text-sm mt-1.5 leading-relaxed">
@@ -98,15 +100,15 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-        className="w-full lg:w-1/2 xl:w-[50%] flex items-center justify-center p-6 sm:p-10 lg:p-16 bg-white min-h-[500px] lg:min-h-[calc(100vh-4px)]"
+        className="w-full lg:w-1/2 xl:w-[50%] flex items-center justify-center p-6 sm:p-10 lg:p-16 bg-white min-h-[calc(100vh-4px)]"
       >
         <div className="max-w-[440px] w-full mx-auto my-auto">
           {/* Form Title */}
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-navy flex items-center justify-center gap-2">
+          <div className="mb-8 text-center">
+            <h2 className="flex items-center justify-center gap-2 text-2xl font-bold sm:text-3xl text-navy">
               Welcome Back! <span className="text-2xl sm:text-3xl">😁</span>
             </h2>
-            <p className="text-xs sm:text-sm text-text-secondary mt-2">
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary">
               Enter your email and password to access your account.
             </p>
           </div>
@@ -123,7 +125,7 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder=""
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-navy focus:ring-1 focus:ring-navy text-sm transition-all bg-white"
+                className="w-full px-4 py-3 text-sm transition-all bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-navy focus:ring-1 focus:ring-navy"
                 required
               />
             </div>
@@ -139,7 +141,7 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-navy focus:ring-1 focus:ring-navy text-sm transition-all pr-11 bg-white placeholder:text-gray-300"
+                  className="w-full px-4 py-3 text-sm transition-all bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-navy focus:ring-1 focus:ring-navy pr-11 placeholder:text-gray-300"
                   required
                 />
                 <button
@@ -158,11 +160,11 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
             </div>
 
             {/* Forgot Password Link */}
-            <div className="text-right pt-1">
+            <div className="pt-1 text-right">
               <button
                 type="button"
                 onClick={() => onNavigate?.("forgot-password")}
-                className="text-xs sm:text-sm text-text-secondary hover:text-text-primary transition-colors focus:outline-none"
+                className="text-xs transition-colors sm:text-sm text-text-secondary hover:text-text-primary focus:outline-none"
               >
                 Forgot Password?{" "}
                 <span className="text-[#0B4A8F] font-bold hover:underline">
@@ -184,7 +186,7 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
           </form>
 
           {/* Bottom Register Prompt */}
-          <p className="text-center text-xs sm:text-sm text-text-secondary mt-8">
+          <p className="mt-8 text-xs text-center sm:text-sm text-text-secondary">
             Don’t have an account yet?{" "}
             <button
               type="button"
