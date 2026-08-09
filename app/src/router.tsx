@@ -13,6 +13,9 @@ import WishlistPage from "@/pages/WishlistPage";
 import CartPage from "@/pages/CartPage";
 import CheckoutPage from "@/pages/CheckoutPage";
 import ProfilePage from "@/pages/ProfilePage";
+import FAQsPage from "@/pages/FAQsPage";
+import SupportPage from "@/pages/SupportPage";
+import OrdersPage from "@/pages/OrdersPage";
 import ComingSoonPage from "@/pages/ComingSoonPage";
 
 const LoginPageWrapper = () => {
@@ -138,15 +141,27 @@ export const router = createBrowserRouter([
   // Pages not built yet — show the Coming Soon placeholder
   {
     path: "/faqs",
-    element: <ComingSoonPage />,
+    element: <FAQsPage />,
+  },
+  {
+    path: "/faq",
+    element: <FAQsPage />,
   },
   {
     path: "/support",
-    element: <ComingSoonPage />,
+    element: <SupportPage />,
+  },
+  {
+    path: "/contact",
+    element: <SupportPage />,
   },
   {
     path: "/orders",
-    element: <ComingSoonPage />,
+    element: <OrdersPage />,
+  },
+  {
+    path: "/my-orders",
+    element: <OrdersPage />,
   },
   // Catch-all for any unknown route
   {

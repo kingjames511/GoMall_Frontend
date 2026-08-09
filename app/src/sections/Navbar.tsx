@@ -9,6 +9,7 @@ import { useAppContext } from "@/context/AppContext";
 import { useCart } from "@/query/cart";
 import { useCurrentUserQuery } from "@/query/auth";
 import { clearAuth, isAuthenticated } from "@/utils/storage";
+import CartPanel from "@/components/CartPanel";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
@@ -66,6 +68,14 @@ const Navbar = () => {
 
   const isWishlistActive = location.pathname === "/wishlist" || location.pathname === "/favourites";
   const isCartActive = location.pathname === "/cart";
+
+  const openCart = () => {
+    if (window.innerWidth >= 1024) {
+      setCartOpen(true);
+      return;
+    }
+    navigate("/cart");
+  };
 
   return (
     <nav
@@ -142,7 +152,7 @@ const Navbar = () => {
 
           {/* Cart Button */}
           <button
-            onClick={() => navigate("/cart")}
+            onClick={openCart}
             className="flex flex-col items-center justify-center transition-colors relative group cursor-pointer"
             aria-label="Cart"
           >
@@ -286,6 +296,32 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+
+      <AnimatePresence>
+        {cartOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] bg-black/45 lg:hidden"
+            onClick={() => setCartOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {cartOpen && (
+          <motion.aside
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 260, damping: 24 }}
+            className="fixed right-0 top-0 z-[70] h-screen w-full max-w-md border-l border-border-gray bg-white shadow-2xl"
+          >
+            <CartPanel onClose={() => setCartOpen(false)} className="h-screen" />
+          </motion.aside>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Menu */}
       <AnimatePresence>

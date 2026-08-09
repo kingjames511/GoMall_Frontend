@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { ArrowLeft, Edit2 } from "lucide-react";
 import toast from "react-hot-toast";
-import TopBar from "@/sections/TopBar";
+
 import Navbar from "@/sections/Navbar";
 import Footer from "@/sections/Footer";
 import { useAppContext } from "@/context/AppContext";
@@ -47,27 +47,26 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-vietnam flex flex-col">
-      <TopBar />
+    <div className="flex flex-col min-h-screen bg-white font-vietnam">
       <Navbar />
 
       <main className="flex-grow bg-[#FAFAFA] py-8">
-        <div className="container-main max-w-3xl">
+        <div className="max-w-2xl container-main">
           
           {/* Breadcrumbs (matching attachment 3 layout) */}
-          <div className="py-2 text-caption text-text-secondary flex items-center gap-2 mb-6">
-            <Link to="/" className="hover:text-navy transition-colors">Home</Link>
+          <div className="flex items-center gap-2 py-2 mb-6 text-caption text-text-secondary">
+            <Link to="/" className="transition-colors hover:text-navy">Home</Link>
             <span className="text-gray-300">/</span>
-            <Link to="/cart" className="hover:text-navy transition-colors">Cart</Link>
+            <Link to="/cart" className="transition-colors hover:text-navy">Cart</Link>
             <span className="text-gray-300">/</span>
-            <span className="text-text-muted font-semibold">Checkout</span>
+            <span className="font-semibold text-text-muted">Checkout</span>
           </div>
 
           {/* Stepper Progress Bar & Go Back Row */}
           <div className="flex items-center justify-between mb-8">
             <Link
               to="/cart"
-              className="flex items-center gap-2 text-body font-bold text-text-primary hover:text-navy transition-colors"
+              className="flex items-center gap-2 font-bold transition-colors text-body text-text-primary hover:text-navy"
             >
               <ArrowLeft size={18} />
               <span>Go Back</span>
@@ -85,9 +84,9 @@ export default function CheckoutPage() {
           <div className="space-y-6">
             
             {/* Step 1: Order Summary */}
-            <div className="bg-white border border-border-gray rounded-2xl p-6 shadow-sm">
+            <div className="p-6 bg-white border shadow-sm border-border-gray rounded-2xl">
               <div className="flex items-center gap-3 mb-6">
-                <h2 className="text-body-lg font-bold text-text-primary">Order Summary</h2>
+                <h2 className="font-bold text-body-lg text-text-primary">Order Summary</h2>
                 <span className="bg-[#0B4A8F] text-white font-bold text-[11px] px-2.5 py-0.5 rounded-full">
                   {totalCount}
                 </span>
@@ -99,18 +98,18 @@ export default function CheckoutPage() {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-16 h-16 rounded-xl object-cover bg-gray-bg border border-border-gray shrink-0"
+                      className="object-cover w-16 h-16 border rounded-xl bg-gray-bg border-border-gray shrink-0"
                     />
-                    <div className="flex-grow flex justify-between items-start gap-4">
+                    <div className="flex items-start justify-between flex-grow gap-4">
                       <div>
-                        <h3 className="text-body font-bold text-text-primary leading-tight">
+                        <h3 className="font-bold leading-tight text-body text-text-primary">
                           {item.name}
                         </h3>
                         <p className="text-[11px] text-text-muted mt-0.5">
                           {item.store}
                         </p>
                       </div>
-                      <span className="text-body font-extrabold text-text-primary">
+                      <span className="font-extrabold text-body text-text-primary">
                         {item.price}
                       </span>
                     </div>
@@ -120,10 +119,10 @@ export default function CheckoutPage() {
             </div>
 
             {/* Step 2: Delivery Method (Optional) */}
-            <div className="bg-white border border-border-gray rounded-2xl p-6 shadow-sm">
+            <div className="p-6 bg-white border shadow-sm border-border-gray rounded-2xl">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2.5">
-                  <h2 className="text-body-lg font-bold text-text-primary">Delivery Method</h2>
+                  <h2 className="font-bold text-body-lg text-text-primary">Delivery Method</h2>
                   <span className="text-[10px] text-navy border border-navy/35 px-2 py-0.5 rounded font-semibold bg-navy/5">
                     Optional
                   </span>
@@ -131,7 +130,7 @@ export default function CheckoutPage() {
               </div>
 
               <div className="flex items-center justify-between pt-2">
-                <span className="text-body font-bold text-text-primary">Request a Rider</span>
+                <span className="font-bold text-body text-text-primary">Request a Rider</span>
                 
                 {/* Custom Toggle Switch */}
                 <button
@@ -152,9 +151,9 @@ export default function CheckoutPage() {
             </div>
 
             {/* Step 3: Delivery Information (Editable) */}
-            <div className="bg-white border border-border-gray rounded-2xl p-6 shadow-sm">
+            <div className="p-6 bg-white border shadow-sm border-border-gray rounded-2xl">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-body-lg font-bold text-text-primary">Delivery Information</h2>
+                <h2 className="font-bold text-body-lg text-text-primary">Delivery Information</h2>
                 {!isEditing && (
                   <button
                     onClick={() => {
@@ -171,54 +170,54 @@ export default function CheckoutPage() {
 
               {isEditing ? (
                 /* Edit Delivery Form Overlay/Container */
-                <form onSubmit={handleEditSubmit} className="space-y-4 pt-2">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <form onSubmit={handleEditSubmit} className="pt-2 space-y-4">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="block text-caption font-bold text-text-primary mb-1">Full Name</label>
+                      <label className="block mb-1 font-bold text-caption text-text-primary">Full Name</label>
                       <input
                         type="text"
                         required
                         value={editForm.name}
                         onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                        className="w-full px-3 py-2 border border-border-gray rounded-lg text-body bg-white outline-none focus:border-navy"
+                        className="w-full px-3 py-2 bg-white border rounded-lg outline-none border-border-gray text-body focus:border-navy"
                       />
                     </div>
                     <div>
-                      <label className="block text-caption font-bold text-text-primary mb-1">Phone Number</label>
+                      <label className="block mb-1 font-bold text-caption text-text-primary">Phone Number</label>
                       <input
                         type="text"
                         required
                         value={editForm.phone}
                         onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                        className="w-full px-3 py-2 border border-border-gray rounded-lg text-body bg-white outline-none focus:border-navy"
+                        className="w-full px-3 py-2 bg-white border rounded-lg outline-none border-border-gray text-body focus:border-navy"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-caption font-bold text-text-primary mb-1">Delivery Address</label>
+                    <label className="block mb-1 font-bold text-caption text-text-primary">Delivery Address</label>
                     <input
                       type="text"
                       required
                       value={editForm.address}
                       onChange={(e) => setEditForm({ ...editForm, address: e.target.value })}
-                      className="w-full px-3 py-2 border border-border-gray rounded-lg text-body bg-white outline-none focus:border-navy"
+                      className="w-full px-3 py-2 bg-white border rounded-lg outline-none border-border-gray text-body focus:border-navy"
                     />
                   </div>
                   <div>
-                    <label className="block text-caption font-bold text-text-primary mb-1">Email Address</label>
+                    <label className="block mb-1 font-bold text-caption text-text-primary">Email Address</label>
                     <input
                       type="email"
                       required
                       value={editForm.email}
                       onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-                      className="w-full px-3 py-2 border border-border-gray rounded-lg text-body bg-white outline-none focus:border-navy"
+                      className="w-full px-3 py-2 bg-white border rounded-lg outline-none border-border-gray text-body focus:border-navy"
                     />
                   </div>
-                  <div className="flex gap-2 justify-end pt-2">
+                  <div className="flex justify-end gap-2 pt-2">
                     <button
                       type="button"
                       onClick={() => setIsEditing(false)}
-                      className="px-4 py-2 border border-border-gray rounded-lg text-body-sm text-text-secondary hover:bg-gray-50"
+                      className="px-4 py-2 border rounded-lg border-border-gray text-body-sm text-text-secondary hover:bg-gray-50"
                     >
                       Cancel
                     </button>
@@ -233,7 +232,7 @@ export default function CheckoutPage() {
               ) : (
                 /* Display Mode */
                 <div className="space-y-3.5 pt-2">
-                  <h3 className="text-body font-bold text-text-primary">{deliveryInfo.name}</h3>
+                  <h3 className="font-bold text-body text-text-primary">{deliveryInfo.name}</h3>
                   <div className="space-y-2 text-caption text-text-secondary">
                     <div className="flex items-start gap-2">
                       <span className="shrink-0 mt-0.5">🏠</span>

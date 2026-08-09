@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
 import TopBar from "@/sections/TopBar";
@@ -6,10 +7,12 @@ import Footer from "@/sections/Footer";
 import { CartLineSkeleton } from "@/components/Skeletons";
 import { formatPrice } from "@/utils/format";
 import { useCart } from "@/query/cart";
+import ConfirmModal from "@/components/ConfirmModal";
 
 export default function CartPage() {
   const navigate = useNavigate();
   const { lines, itemCount, isLoading, updateQuantity, removeItem } = useCart();
+  const [itemToDelete, setItemToDelete] = useState<{ id: string; name: string } | null>(null);
 
   const getSubtotal = () => {
     return lines.reduce((acc, item) => {
@@ -31,6 +34,12 @@ export default function CartPage() {
     // updateQuantity handles DELETE-on-zero; guard keeps min at 1 here.
     if (currentQty > 1) {
       updateQuantity(productId, currentQty - 1);
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    if (itemToDelete) {
+      await removeItem(itemToDelete.id);
     }
   };
 
@@ -128,7 +137,7 @@ export default function CartPage() {
 
                         {/* Remove Button */}
                         <button
-                          onClick={() => removeItem(item.product.id)}
+                          onClick={() => setItemToDelete({ id: item.product.id, name: item.product.name })}
                           className="w-9 h-9 rounded-full bg-red/10 text-red flex items-center justify-center hover:bg-red/20 transition-colors cursor-pointer"
                           aria-label="Remove item"
                         >
@@ -198,6 +207,18 @@ export default function CartPage() {
           )}
         </div>
       </main>
+
+
+      <ConfirmModal
+        isOpen={!!itemToDelete}
+        onClose={() => setItemToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        title="Remove from cart"
+        description="Are you sure you want to delete this item fro cart?"
+        confirmText="Yes, Remove Item"
+        cancelText="No, Cancel"
+        variant="danger"
+      />
 
       <Footer />
     </div>

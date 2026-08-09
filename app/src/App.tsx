@@ -12,7 +12,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AppContextProvider>
           <RouterProvider router={router} />
-          <Toaster position="bottom-right" toastOptions={{ duration: 3000 }} />
+          <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
         </AppContextProvider>
       </QueryClientProvider>
     </ErrorBoundary>

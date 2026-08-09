@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+import tailwindcssAnimate from "tailwindcss-animate";
+
+export default {
   darkMode: ["class"],
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -51,18 +53,18 @@ module.exports = {
         "gray-bg": "#F5F5F5",
       },
       fontFamily: {
-        inter: ['Inter', 'system-ui', 'sans-serif'],
-        vietnam: ['"Be Vietnam Pro"', 'system-ui', 'sans-serif'],
+        inter: ["Inter", "system-ui", "sans-serif"],
+        vietnam: ["\"Be Vietnam Pro\"", "system-ui", "sans-serif"],
       },
       fontSize: {
-        'badge': ['0.6875rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.02em' }],
-        'caption': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0.01em' }],
-        'body-sm': ['0.8125rem', { lineHeight: '1.5' }],
-        'body': ['0.875rem', { lineHeight: '1.6' }],
-        'h4': ['1.125rem', { lineHeight: '1.4', fontWeight: '600' }],
-        'h3': ['1.25rem', { lineHeight: '1.3', fontWeight: '600' }],
-        'h2': ['2rem', { lineHeight: '1.25', fontWeight: '600', letterSpacing: '-0.01em' }],
-        'h1': ['3rem', { lineHeight: '1.15', fontWeight: '700', letterSpacing: '-0.02em' }],
+        badge: ["0.6875rem", { lineHeight: "1", fontWeight: "600", letterSpacing: "0.02em" }],
+        caption: ["0.75rem", { lineHeight: "1.4", letterSpacing: "0.01em" }],
+        "body-sm": ["0.8125rem", { lineHeight: "1.5" }],
+        body: ["0.875rem", { lineHeight: "1.6" }],
+        h4: ["1.125rem", { lineHeight: "1.4", fontWeight: "600" }],
+        h3: ["1.25rem", { lineHeight: "1.3", fontWeight: "600" }],
+        h2: ["2rem", { lineHeight: "1.25", fontWeight: "600", letterSpacing: "-0.01em" }],
+        h1: ["3rem", { lineHeight: "1.15", fontWeight: "700", letterSpacing: "-0.02em" }],
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",
@@ -104,5 +106,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-}
+  plugins: [tailwindcssAnimate],
+};

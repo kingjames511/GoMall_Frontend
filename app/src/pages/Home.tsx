@@ -1,5 +1,4 @@
 import '../App.css'
-import TopBar from "@/sections/TopBar";
 import Navbar from "@/sections/Navbar";
 import HeroSection from "@/sections/HeroSection";
 import PromoGrid from "@/sections/PromoGrid";

@@ -83,6 +83,8 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
       first_name: data.firstName,
       last_name: data.lastName,
       phone: data.phone,
+      address: data.address,
+      referral_code: data.referralCode?.trim() ? data.referralCode.trim() : undefined,
     });
   };
   return (
@@ -468,7 +470,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
                 {...register("referralCode")}
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm transition-all bg-white outline-none
                   placeholder:text-gray-300
-                  focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10"
+                  focus:border-navy focus:ring-2 focus:ring-navy/10"
               />
             </div>
 
@@ -479,7 +481,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
                 disabled={isPending}
                 whileHover={!isPending ? { scale: 1.01 } : {}}
                 whileTap={!isPending ? { scale: 0.99 } : {}}
-                className="w-full flex items-center justify-center gap-2 bg-[#0B2D6E] hover:bg-[#091f50] disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg text-sm transition-colors duration-200 shadow-sm cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 bg-navy hover:bg-navy-blue disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg text-sm transition-colors duration-200 shadow-sm cursor-pointer"
                 aria-busy={isPending}
               >
                 {isPending ? (
@@ -500,7 +502,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
             <button
               type="button"
               onClick={() => onNavigate?.("login")}
-              className="text-[#0B2D6E] font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2D6E] rounded"
+              className="text-navy font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-navy rounded"
             >
               Login
             </button>

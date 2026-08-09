@@ -81,9 +81,9 @@ export const useCart = () => {
     updateMutation.mutate({ productId, payload: { quantity } });
   };
 
-  const removeItem = (productId: string) => {
+  const removeItem = async (productId: string) => {
     if (!requireAuth()) return;
-    removeMutation.mutate(productId);
+    return await removeMutation.mutateAsync(productId);
   };
 
   return {
