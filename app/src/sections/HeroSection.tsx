@@ -75,12 +75,12 @@ const HeroSection = () => {
             key={slide.id}
             src={slide.image}
             alt={slide.title}
-            initial={{ opacity: 0, scale: 1.08 }}
+            initial={{ opacity: 0, scale: 1.04 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.04 }}
+            exit={{ opacity: 0, scale: 1.02 }}
             transition={{
               opacity: { duration: 1.4, ease: EASE },
-              scale: { duration: 6, ease: "linear" },
+              scale: { duration: 8, ease: "linear" },
             }}
             className="absolute inset-0 w-full h-full object-cover object-center"
           />
@@ -110,7 +110,7 @@ const HeroSection = () => {
               {slide.badge}
             </span>
 
-            <h1 className="text-2xl sm:text-4xl md:text-h1 text-white mt-3 sm:mt-6 leading-tight font-bold">
+            <h1 className="font-display text-2xl sm:text-4xl md:text-h1 text-white mt-3 sm:mt-6 leading-tight font-bold">
               {slide.title}
             </h1>
 

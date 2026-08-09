@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import {
   ChevronRight,
   ChevronDown,
@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import TopBar from "@/sections/TopBar";
 import Navbar from "@/sections/Navbar";
 import Footer from "@/sections/Footer";
+import { isAuthenticated } from "@/utils/storage";
 
 interface OrderItem {
   id: number;
@@ -36,127 +37,25 @@ interface Order {
   items: OrderItem[];
 }
 
-const mockOrders: Order[] = [
-  {
-    id: "1",
-    orderNumber: "#GM-RD-83836",
-    placedAt: "Nov 30 2026 - 10:34 AM",
-    status: "on_the_way",
-    total: "140,000",
-    itemCount: 5,
-    address: "20, Michael Ibru Road, Lagos",
-    items: [
-      {
-        id: 101,
-        name: "Iphone 14 Pro Max",
-        price: "N750,000",
-        qty: 1,
-        seller: "From Alex Gadget",
-        image: "/assets/product-iphone.jpg",
-      },
-      {
-        id: 102,
-        name: "Iphone 14 Pro Max",
-        price: "N750,000",
-        qty: 1,
-        seller: "From Alora Glow",
-        image: "/assets/product-skincare.jpg",
-      },
-      {
-        id: 103,
-        name: "Iphone 14 Pro Max",
-        price: "N750,000",
-        qty: 1,
-        seller: "From Gadget Plug NG",
-        image: "/assets/product-headphones.jpg",
-      },
-      {
-        id: 104,
-        name: "Iphone 14 Pro Max",
-        price: "N750,000",
-        qty: 1,
-        seller: "From Tech Shop",
-        image: "/assets/product-iphone-back.jpg",
-      },
-      {
-        id: 105,
-        name: "Iphone 14 Pro Max",
-        price: "N750,000",
-        qty: 1,
-        seller: "From JJ Electronics",
-        image: "/assets/product-monitor.jpg",
-      },
-    ],
-  },
-  {
-    id: "2",
-    orderNumber: "#GM-RD-83836",
-    placedAt: "Nov 30 2026 - 10:34 AM",
-    status: "out_for_delivery",
-    total: "140,000",
-    itemCount: 5,
-    address: "20, Michael Ibru Road, Lagos",
-    items: [
-      {
-        id: 201,
-        name: "Wireless Headphones",
-        price: "N45,000",
-        qty: 1,
-        seller: "From SoundHub",
-        image: "/assets/product-headphones.jpg",
-      },
-    ],
-  },
-  {
-    id: "3",
-    orderNumber: "#GM-RD-83836",
-    placedAt: "Nov 30 2026 - 10:34 AM",
-    status: "processing",
-    total: "140,000",
-    itemCount: 5,
-    address: "20, Michael Ibru Road, Lagos",
-    items: [
-      {
-        id: 301,
-        name: "Ultra HD Monitor 27\"",
-        price: "N185,000",
-        qty: 1,
-        seller: "From JJ Electronics",
-        image: "/assets/product-monitor.jpg",
-      },
-    ],
-  },
-  {
-    id: "4",
-    orderNumber: "#GM-RD-83836",
-    placedAt: "Nov 30 2026 - 10:34 AM",
-    status: "cancelled",
-    total: "140,000",
-    itemCount: 5,
-    address: "20, Michael Ibru Road, Lagos",
-    items: [
-      {
-        id: 401,
-        name: "Organic Glow Skincare Kit",
-        price: "N25,000",
-        qty: 2,
-        seller: "From Alora Glow",
-        image: "/assets/product-skincare.jpg",
-      },
-    ],
-  },
-];
-
 export default function OrdersPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [orders, setOrders] = useState<Order[]>([]);
   const [activeTab, setActiveTab] = useState<"all" | "inprogress" | "completed" | "cancelled">("all");
-  const [expandedOrderId, setExpandedOrderId] = useState<string | null>("1");
+  const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
   const [trackingModalOrder, setTrackingModalOrder] = useState<Order | null>(null);
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`);
+    }
+  }, [location.pathname, navigate]);
 
   const toggleExpand = (orderId: string) => {
     setExpandedOrderId(expandedOrderId === orderId ? null : orderId);
   };
 
-  const filteredOrders = mockOrders.filter((order) => {
+  const filteredOrders = orders.filter((order) => {
     if (activeTab === "all") return true;
     if (activeTab === "inprogress") return order.status === "on_the_way" || order.status === "out_for_delivery" || order.status === "processing";
     if (activeTab === "completed") return order.status === "completed";
@@ -168,28 +67,28 @@ export default function OrdersPage() {
     switch (status) {
       case "on_the_way":
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#E8F8EE] text-[#22A65A] border border-[#22A65A]/20">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green/10 text-green border border-green/20">
             <Bike size={14} />
             On the Way
           </span>
         );
       case "out_for_delivery":
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#EBF3FF] text-[#0B4A8F] border border-[#0B4A8F]/20">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-navy/10 text-navy border border-navy/20">
             <Truck size={14} />
             Out For Delivery
           </span>
         );
       case "processing":
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#FFF8E6] text-[#D97706] border border-[#D97706]/20">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-star/10 text-star border border-star/20">
             <Clock size={14} />
             Processing
           </span>
         );
       case "cancelled":
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#FEE2E2] text-[#DC2626] border border-[#DC2626]/20">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-red/10 text-red border border-red/20">
             <XCircle size={14} />
             Cancelled
           </span>
@@ -221,7 +120,7 @@ export default function OrdersPage() {
 
         {/* Banner matching Attachment 1 */}
         <div className="container-main mb-8">
-          <div className="relative rounded-2xl md:rounded-3xl overflow-hidden h-[180px] sm:h-[210px] md:h-[240px] flex items-center px-6 md:px-12">
+          <div className="relative rounded-2xl md:rounded-2xl overflow-hidden h-[180px] sm:h-[210px] md:h-[240px] flex items-center px-6 md:px-12">
             <img
               src="/assets/orders-bg.png"
               alt="Grocery shopping cart"
@@ -247,44 +146,44 @@ export default function OrdersPage() {
               onClick={() => setActiveTab("all")}
               className={`pb-3.5 px-1 border-b-2 whitespace-nowrap transition-all cursor-pointer ${
                 activeTab === "all"
-                  ? "border-[#0B4A8F] text-[#0B4A8F] font-bold"
+                  ? "border-navy text-navy font-bold"
                   : "border-transparent text-gray-500 hover:text-gray-800"
               }`}
             >
-              All Orders ({mockOrders.length})
+              All Orders ({orders.length})
             </button>
 
             <button
               onClick={() => setActiveTab("inprogress")}
               className={`pb-3.5 px-1 border-b-2 whitespace-nowrap transition-all cursor-pointer ${
                 activeTab === "inprogress"
-                  ? "border-[#0B4A8F] text-[#0B4A8F] font-bold"
+                  ? "border-navy text-navy font-bold"
                   : "border-transparent text-gray-500 hover:text-gray-800"
               }`}
             >
-              Inprogress (3)
+              Inprogress ({orders.filter((order) => order.status === "on_the_way" || order.status === "out_for_delivery" || order.status === "processing").length})
             </button>
 
             <button
               onClick={() => setActiveTab("completed")}
               className={`pb-3.5 px-1 border-b-2 whitespace-nowrap transition-all cursor-pointer ${
                 activeTab === "completed"
-                  ? "border-[#0B4A8F] text-[#0B4A8F] font-bold"
+                  ? "border-navy text-navy font-bold"
                   : "border-transparent text-gray-500 hover:text-gray-800"
               }`}
             >
-              Completed Orders (3)
+              Completed Orders ({orders.filter((order) => order.status === "completed").length})
             </button>
 
             <button
               onClick={() => setActiveTab("cancelled")}
               className={`pb-3.5 px-1 border-b-2 whitespace-nowrap transition-all cursor-pointer ${
                 activeTab === "cancelled"
-                  ? "border-[#0B4A8F] text-[#0B4A8F] font-bold"
+                  ? "border-navy text-navy font-bold"
                   : "border-transparent text-gray-500 hover:text-gray-800"
               }`}
             >
-              Cancelled (3)
+              Cancelled ({orders.filter((order) => order.status === "cancelled").length})
             </button>
           </div>
 
@@ -350,7 +249,7 @@ export default function OrdersPage() {
                     {isExpanded && (
                       <div className="px-4 sm:px-6 pb-6 pt-2 space-y-5 border-t border-gray-100 bg-white">
                         {/* Horizontal Product Items Slider Container */}
-                        <div className="bg-[#F8FAFC] border border-gray-100 rounded-xl p-4 sm:p-5 flex gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200">
+                        <div className="bg-gray-bg border border-gray-100 rounded-xl p-4 sm:p-5 flex gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200">
                           {order.items.map((item) => (
                             <div
                               key={item.id}
@@ -363,7 +262,7 @@ export default function OrdersPage() {
                                   alt={item.name}
                                   className="w-full h-full object-cover rounded-lg"
                                 />
-                                <span className="w-5 h-5 bg-[#0B4A8F] text-white rounded-full flex items-center justify-center text-[10px] font-bold absolute top-1.5 right-1.5 shadow-xs">
+                                <span className="w-5 h-5 bg-navy text-white rounded-full flex items-center justify-center text-[10px] font-bold absolute top-1.5 right-1.5 shadow-xs">
                                   {item.qty}
                                 </span>
                               </div>
@@ -385,7 +284,7 @@ export default function OrdersPage() {
                         {/* Footer Bar inside expanded order */}
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-full bg-[#EBF3FF] text-[#0B4A8F] flex items-center justify-center shrink-0">
+                            <div className="w-9 h-9 rounded-full bg-navy/10 text-navy flex items-center justify-center shrink-0">
                               <MapPin size={18} />
                             </div>
                             <div>
@@ -406,7 +305,7 @@ export default function OrdersPage() {
                                 setTrackingModalOrder(order);
                               }
                             }}
-                            className="w-full sm:w-auto bg-[#0B2D6E] hover:bg-[#082255] text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all cursor-pointer shadow-2xs"
+                            className="w-full sm:w-auto bg-navy hover:bg-navy-hover text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all cursor-pointer shadow-2xs"
                           >
                             Track Order
                           </button>
@@ -423,7 +322,7 @@ export default function OrdersPage() {
         {/* Order Tracking Modal */}
         {trackingModalOrder && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-5 relative shadow-xl animate-in fade-in zoom-in duration-200">
+            <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-5 relative shadow-lg animate-in fade-in zoom-in duration-200">
               <button
                 onClick={() => setTrackingModalOrder(null)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 cursor-pointer"
@@ -432,7 +331,7 @@ export default function OrdersPage() {
               </button>
 
               <div>
-                <span className="text-xs font-semibold text-[#0B4A8F] uppercase tracking-wider">
+                <span className="text-xs font-semibold text-navy uppercase tracking-wider">
                   Real-time Tracking
                 </span>
                 <h3 className="text-xl font-bold text-text-primary mt-1">
@@ -458,7 +357,7 @@ export default function OrdersPage() {
                 <div className="w-0.5 h-4 bg-emerald-500 ml-4" />
 
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#0B4A8F] text-white flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center shrink-0">
                     <Truck size={16} />
                   </div>
                   <div>
@@ -485,7 +384,7 @@ export default function OrdersPage() {
                   toast.success("Tracking link copied to clipboard!");
                   setTrackingModalOrder(null);
                 }}
-                className="w-full bg-[#0B2D6E] hover:bg-[#082255] text-white py-2.5 rounded-lg font-semibold text-sm transition-colors cursor-pointer mt-4"
+                className="w-full bg-navy hover:bg-navy-hover text-white py-2.5 rounded-lg font-semibold text-sm transition-colors cursor-pointer mt-4"
               >
                 Copy Tracking Link
               </button>

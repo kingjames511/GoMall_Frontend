@@ -106,7 +106,7 @@ const Navbar = () => {
                 to={link.href}
                 className={`text-body font-medium transition-all duration-200 px-4 py-1.5 rounded-full ${
                   active
-                    ? "bg-[#0B4A8F] text-white"
+                    ? "bg-navy text-white"
                     : "text-text-primary hover:text-navy"
                 }`}
               >
@@ -139,7 +139,7 @@ const Navbar = () => {
             <div
               className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                 isWishlistActive
-                  ? "bg-[#0B4A8F] text-white"
+                  ? "bg-navy text-white"
                   : "text-text-secondary group-hover:bg-gray-bg"
               }`}
             >
@@ -159,14 +159,14 @@ const Navbar = () => {
             <div
               className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                 isCartActive
-                  ? "bg-[#0B4A8F] text-white"
+                  ? "bg-navy text-white"
                   : "text-text-secondary group-hover:bg-gray-bg"
               }`}
             >
               <ShoppingCart size={20} />
               {/* Dynamic badge with green bg to match attachment 1 */}
               {cartCount > 0 && (
-                <span className="absolute top-0 right-1 w-5 h-5 bg-[#22A65A] border-2 border-white text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-sm">
+                <span className="absolute top-0 right-1 w-5 h-5 bg-green border-2 border-white text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-sm">
                   {cartCount}
                 </span>
               )}
@@ -188,7 +188,7 @@ const Navbar = () => {
             >
               <div className="w-7 h-7 rounded-full bg-gray-bg overflow-hidden border border-gray-100 shrink-0 flex items-center justify-center">
                 {loggedIn ? (
-                  <span className="w-full h-full bg-[#0B4A8F] text-white flex items-center justify-center text-[11px] font-bold">
+                  <span className="w-full h-full bg-navy text-white flex items-center justify-center text-[11px] font-bold">
                     {initials}
                   </span>
                 ) : (
@@ -211,7 +211,7 @@ const Navbar = () => {
                     <>
                       {/* Signed-in header with real user data */}
                       <div className="flex items-center gap-3 px-4 py-3 border-b border-border-gray">
-                        <div className="w-10 h-10 rounded-full bg-[#0B4A8F] text-white flex items-center justify-center text-body font-bold shrink-0">
+                        <div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center text-body font-bold shrink-0">
                           {initials}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -236,7 +236,7 @@ const Navbar = () => {
                       </button>
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-3 px-4 py-2.5 text-body text-[#DC3545] hover:bg-[#DC3545]/5 transition-colors cursor-pointer text-left"
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-body text-red hover:bg-red/5 transition-colors cursor-pointer text-left"
                       >
                         <LogOut size={16} />
                         Logout
@@ -292,7 +292,7 @@ const Navbar = () => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
@@ -316,7 +316,7 @@ const Navbar = () => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 260, damping: 24 }}
-            className="fixed right-0 top-0 z-[70] h-screen w-full max-w-md border-l border-border-gray bg-white shadow-2xl"
+            className="fixed right-0 top-0 z-[70] h-screen w-full max-w-md border-l border-border-gray bg-white shadow-lg"
           >
             <CartPanel onClose={() => setCartOpen(false)} className="h-screen" />
           </motion.aside>
@@ -342,7 +342,7 @@ const Navbar = () => {
                     to={link.href}
                     className={`py-3 text-body font-medium px-4 rounded-lg transition-colors ${
                       active
-                        ? "bg-[#0B4A8F] text-white"
+                        ? "bg-navy text-white"
                         : "text-text-primary hover:text-navy"
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
@@ -380,7 +380,7 @@ const Navbar = () => {
                       setMobileMenuOpen(false);
                       navigate("/login");
                     }}
-                    className="flex-1 py-2.5 px-4 rounded-lg border border-[#0B2D6E] text-[#0B2D6E] font-semibold text-center text-sm hover:bg-blue-50/50 transition-all cursor-pointer"
+                    className="btn btn-outline flex-1"
                   >
                     Login
                   </button>
@@ -389,7 +389,7 @@ const Navbar = () => {
                       setMobileMenuOpen(false);
                       navigate("/signup");
                     }}
-                    className="flex-1 py-2.5 px-4 rounded-lg bg-[#0B2D6E] text-white font-semibold text-center text-sm hover:bg-[#091f50] transition-all cursor-pointer"
+                    className="btn btn-primary flex-1"
                   >
                     Sign Up
                   </button>

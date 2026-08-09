@@ -10,7 +10,7 @@ const FAQSection = () => {
     <section
       id="faqs"
       ref={ref}
-      className="py-20 md:py-28 bg-white relative overflow-hidden"
+      className="py-16 md:py-20 bg-white relative overflow-hidden"
     >
       {/* Watermark Logo */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
@@ -52,7 +52,7 @@ const FAQSection = () => {
               className="flex gap-4 md:gap-5 items-start text-left"
             >
               {/* Number Badge */}
-              <div className="w-8 h-8 rounded-full bg-[#0B1F3F] flex items-center justify-center text-white font-bold text-sm shrink-0">
+              <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center text-white font-bold text-sm shrink-0">
                 {faq.id}
               </div>
 

@@ -50,8 +50,8 @@ export default function CheckoutPage() {
     <div className="flex flex-col min-h-screen bg-white font-vietnam">
       <Navbar />
 
-      <main className="flex-grow bg-[#FAFAFA] py-8">
-        <div className="max-w-2xl container-main">
+      <main className="flex-grow bg-gray-bg py-8">
+        <div className="mx-auto max-w-2xl px-6">
           
           {/* Breadcrumbs (matching attachment 3 layout) */}
           <div className="flex items-center gap-2 py-2 mb-6 text-caption text-text-secondary">
@@ -74,7 +74,7 @@ export default function CheckoutPage() {
 
             {/* Steps capsule progress indicator */}
             <div className="flex gap-2">
-              <span className="w-12 h-1.5 rounded-full bg-[#0B4A8F]" />
+              <span className="w-12 h-1.5 rounded-full bg-navy" />
               <span className="w-12 h-1.5 rounded-full bg-gray-200" />
               <span className="w-12 h-1.5 rounded-full bg-gray-200" />
             </div>
@@ -87,7 +87,7 @@ export default function CheckoutPage() {
             <div className="p-6 bg-white border shadow-sm border-border-gray rounded-2xl">
               <div className="flex items-center gap-3 mb-6">
                 <h2 className="font-bold text-body-lg text-text-primary">Order Summary</h2>
-                <span className="bg-[#0B4A8F] text-white font-bold text-[11px] px-2.5 py-0.5 rounded-full">
+                <span className="bg-navy text-white font-bold text-[11px] px-2.5 py-0.5 rounded-full">
                   {totalCount}
                 </span>
               </div>
@@ -137,7 +137,7 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={toggleRequestRider}
                   className={`w-11 h-6 rounded-full transition-colors duration-200 focus:outline-none relative p-0.5 cursor-pointer ${
-                    requestRider ? "bg-[#0B4A8F]" : "bg-gray-200"
+                    requestRider ? "bg-navy" : "bg-gray-200"
                   }`}
                   aria-label="Toggle Rider Request"
                 >
@@ -160,7 +160,7 @@ export default function CheckoutPage() {
                       setEditForm(deliveryInfo);
                       setIsEditing(true);
                     }}
-                    className="flex items-center gap-1 text-caption text-[#0B4A8F] hover:underline font-semibold cursor-pointer"
+                    className="flex items-center gap-1 text-caption text-navy hover:underline font-semibold cursor-pointer"
                   >
                     <Edit2 size={12} />
                     <span>Edit</span>
@@ -223,7 +223,7 @@ export default function CheckoutPage() {
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-[#0B4A8F] text-white rounded-lg text-body-sm font-semibold hover:bg-navy"
+                      className="px-4 py-2 bg-navy text-white rounded-lg text-body-sm font-semibold hover:bg-navy"
                     >
                       Save Changes
                     </button>
@@ -254,7 +254,7 @@ export default function CheckoutPage() {
             {/* Bottom Button (matching attachment 3 layout) */}
             <button
               onClick={handleContinue}
-              className="w-full bg-[#0B2D6E] hover:bg-[#091f50] text-white font-bold py-4 rounded-lg shadow-md transition-colors cursor-pointer text-center text-body mt-8"
+              className="w-full bg-navy hover:bg-navy-hover text-white font-bold py-4 rounded-lg shadow-md transition-colors cursor-pointer text-center text-body mt-8"
             >
               Continue
             </button>

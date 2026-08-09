@@ -26,10 +26,10 @@ export default function WishlistPage() {
         <div className="container-main py-6">
           {/* Page Heading & Count Badge */}
           <div className="flex items-center gap-3 mb-8">
-            <h1 className="text-2xl md:text-3xl font-extrabold text-[#0B1F3F]">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-navy">
               Saved Items
             </h1>
-            <span className="bg-[#0B4A8F] text-white font-bold text-sm px-3 py-1 rounded-full">
+            <span className="bg-navy text-white font-bold text-sm px-3 py-1 rounded-full">
               {wishlist.length}
             </span>
           </div>
@@ -58,7 +58,7 @@ export default function WishlistPage() {
             /* Empty Wishlist State (matching attachment 2) */
             <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
               {/* Circular light blue icon container */}
-              <div className="w-24 h-24 rounded-full bg-[#0B4A8F]/10 flex items-center justify-center text-[#0B4A8F] mb-6">
+              <div className="w-24 h-24 rounded-full bg-navy/10 flex items-center justify-center text-navy mb-6">
                 <ShoppingCart className="w-10 h-10" />
               </div>
 
@@ -75,7 +75,7 @@ export default function WishlistPage() {
               {/* Action Button */}
               <button
                 onClick={() => navigate("/products")}
-                className="bg-[#0B4A8F] hover:bg-navy text-white font-bold text-body py-3.5 px-10 rounded-lg shadow-sm transition-colors cursor-pointer"
+                className="bg-navy hover:bg-navy text-white font-bold text-body py-3.5 px-10 rounded-lg shadow-sm transition-colors cursor-pointer"
               >
                 Continue Shopping
               </button>

@@ -44,8 +44,8 @@ export default function ProfilePage() {
       <TopBar />
       <Navbar />
 
-      <main className="flex-grow bg-[#FAFAFA] py-8">
-        <div className="container-main max-w-2xl">
+      <main className="flex-grow bg-gray-bg py-8">
+        <div className="mx-auto max-w-2xl px-6">
           {/* Breadcrumbs */}
           <div className="py-2 text-caption text-text-secondary flex items-center gap-2 mb-6">
             <Link to="/" className="hover:text-navy transition-colors">
@@ -116,7 +116,7 @@ export default function ProfilePage() {
               {/* Identity card */}
               <div className="bg-white border border-border-gray rounded-2xl p-6 shadow-sm">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-[#0B4A8F] text-white flex items-center justify-center text-h3 font-bold shrink-0">
+                  <div className="w-16 h-16 rounded-full bg-navy text-white flex items-center justify-center text-h3 font-bold shrink-0">
                     {initials}
                   </div>
                   <div className="min-w-0">
@@ -125,12 +125,12 @@ export default function ProfilePage() {
                         {fullName}
                       </h1>
                       {user.is_verified ? (
-                        <span className="flex items-center gap-1 text-[11px] font-semibold text-[#22A65A] bg-[#22A65A]/10 px-2 py-0.5 rounded-full shrink-0">
+                        <span className="flex items-center gap-1 text-[11px] font-semibold text-green bg-green/10 px-2 py-0.5 rounded-full shrink-0">
                           <BadgeCheck size={12} />
                           Verified
                         </span>
                       ) : (
-                        <span className="flex items-center gap-1 text-[11px] font-semibold text-[#DC3545] bg-[#DC3545]/10 px-2 py-0.5 rounded-full shrink-0">
+                        <span className="flex items-center gap-1 text-[11px] font-semibold text-red bg-red/10 px-2 py-0.5 rounded-full shrink-0">
                           <ShieldAlert size={12} />
                           Unverified
                         </span>
@@ -159,7 +159,7 @@ export default function ProfilePage() {
               {/* Logout */}
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-2 border border-[#DC3545]/40 text-[#DC3545] font-semibold py-3.5 rounded-lg text-body hover:bg-[#DC3545]/5 transition-colors cursor-pointer bg-white"
+                className="w-full flex items-center justify-center gap-2 border border-red/40 text-red font-semibold py-3.5 rounded-lg text-body hover:bg-red/5 transition-colors cursor-pointer bg-white"
               >
                 <LogOut size={18} />
                 Log out

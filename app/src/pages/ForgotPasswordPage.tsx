@@ -84,7 +84,7 @@ function LeftPanel({ onHome }: { onHome?: () => void }) {
       </div>
       {/* Hero */}
       <div className="relative z-20 my-auto py-8">
-        <h1 className="text-4xl lg:text-[44px] font-extrabold text-white leading-[1.15] tracking-tight max-w-[420px]">
+        <h1 className="font-display text-3xl md:text-4xl font-extrabold text-white leading-[1.15] tracking-tight max-w-[420px]">
           Everything You Need, One Marketplace
         </h1>
         <p className="text-sm text-white/90 mt-4 max-w-[380px] leading-relaxed">
@@ -189,7 +189,7 @@ function StepEmail({
             {...register("email")}
             className={`w-full px-4 py-3 rounded-lg border text-sm bg-white outline-none transition-all
               placeholder:text-gray-300
-              focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+              focus:border-navy focus:ring-2 focus:ring-navy/10
               ${errors.email ? "border-red-400" : "border-gray-300"}`}
             aria-invalid={!!errors.email}
           />
@@ -205,7 +205,7 @@ function StepEmail({
           disabled={isSubmitting}
           whileHover={!isSubmitting ? { scale: 1.01 } : {}}
           whileTap={!isSubmitting ? { scale: 0.99 } : {}}
-          className="w-full flex items-center justify-center gap-2 bg-[#0B2D6E] hover:bg-[#091f50] disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-lg text-sm transition-colors duration-200 cursor-pointer"
+          className="w-full flex items-center justify-center gap-2 bg-navy hover:bg-navy-hover disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-lg text-sm transition-colors duration-200 cursor-pointer"
           aria-busy={isSubmitting}
         >
           {isSubmitting ? (
@@ -223,7 +223,7 @@ function StepEmail({
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-[#0B2D6E] transition-colors focus:outline-none"
+          className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-navy transition-colors focus:outline-none"
         >
           <ArrowLeft size={15} />
           Go Back
@@ -390,14 +390,14 @@ function StepOTP({
             onPaste={handlePaste}
             onFocus={(e) => e.target.select()}
             disabled={isResending}
-            className={`w-14 h-16 sm:w-16 sm:h-18 text-center text-2xl font-bold rounded-xl border-2 transition-all outline-none bg-white caret-transparent
+            className={`w-12 h-12 sm:w-14 sm:h-14 text-center text-2xl font-bold rounded-xl border-2 transition-all outline-none bg-white caret-transparent
               ${error
                 ? "border-red-500 text-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/15"
                 : digit
-                  ? "border-[#0B2D6E] text-[#0B2D6E]"
+                  ? "border-navy text-navy"
                   : "border-gray-200 text-gray-900"
               }
-              ${!error && "focus:border-[#0B2D6E] focus:ring-2 focus:ring-[#0B2D6E]/15"}
+              ${!error && "focus:border-navy focus:ring-2 focus:ring-navy/15"}
               disabled:opacity-50`}
           />
         ))}
@@ -410,7 +410,7 @@ function StepOTP({
           onClick={handleResend}
           disabled={countdown > 0 || isResending}
           className={`flex items-center gap-1.5 text-sm font-medium transition-colors focus:outline-none rounded
-            ${countdown === 0 && !isResending ? "text-[#0B2D6E] hover:text-[#091f50] cursor-pointer" : "text-gray-400 cursor-not-allowed"}`}
+            ${countdown === 0 && !isResending ? "text-navy hover:text-navy-hover cursor-pointer" : "text-gray-400 cursor-not-allowed"}`}
         >
           {isResending ? <Loader2 size={13} className="animate-spin" /> : <RefreshCw size={13} />}
           Resend confirmation code
@@ -428,7 +428,7 @@ function StepOTP({
         whileHover={allFilled && !isResending ? { scale: 1.01 } : {}}
         whileTap={allFilled && !isResending ? { scale: 0.99 } : {}}
         className={`w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-lg text-sm transition-all duration-200
-          ${allFilled && !isResending ? "bg-[#0B2D6E] hover:bg-[#091f50] text-white cursor-pointer" : "bg-[#B8C5D6] text-white cursor-not-allowed"}`}
+          ${allFilled && !isResending ? "bg-navy hover:bg-navy-hover text-white cursor-pointer" : "bg-navy/40 text-white cursor-not-allowed"}`}
       >
         Continue
       </motion.button>
@@ -437,7 +437,7 @@ function StepOTP({
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-[#0B2D6E] transition-colors focus:outline-none"
+          className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-navy transition-colors focus:outline-none"
         >
           <ArrowLeft size={15} /> Go Back
         </button>
@@ -534,7 +534,7 @@ function StepReset({
               {...register("password")}
               onKeyDown={(e) => { if (e.key === " ") e.preventDefault(); }}
               className={`w-full px-4 py-3 pr-11 rounded-lg border text-sm bg-white outline-none transition-all
-                placeholder:text-gray-300 focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+                placeholder:text-gray-300 focus:border-navy focus:ring-2 focus:ring-navy/10
                 ${errors.password ? "border-red-400" : "border-gray-300"}`}
               aria-invalid={!!errors.password}
             />
@@ -568,7 +568,7 @@ function StepReset({
               {...register("confirm")}
               onKeyDown={(e) => { if (e.key === " ") e.preventDefault(); }}
               className={`w-full px-4 py-3 pr-11 rounded-lg border text-sm bg-white outline-none transition-all
-                placeholder:text-gray-300 focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+                placeholder:text-gray-300 focus:border-navy focus:ring-2 focus:ring-navy/10
                 ${errors.confirm ? "border-red-400" : "border-gray-300"}`}
               aria-invalid={!!errors.confirm}
             />
@@ -593,7 +593,7 @@ function StepReset({
           disabled={isSubmitting}
           whileHover={!isSubmitting ? { scale: 1.01 } : {}}
           whileTap={!isSubmitting ? { scale: 0.99 } : {}}
-          className="w-full flex items-center justify-center gap-2 bg-[#0B2D6E] hover:bg-[#091f50] disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-lg text-sm transition-colors duration-200 cursor-pointer"
+          className="w-full flex items-center justify-center gap-2 bg-navy hover:bg-navy-hover disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-lg text-sm transition-colors duration-200 cursor-pointer"
           aria-busy={isSubmitting}
         >
           {isSubmitting ? <><Loader2 size={16} className="animate-spin" /> Saving…</> : "Create Password"}
@@ -604,7 +604,7 @@ function StepReset({
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-[#0B2D6E] transition-colors focus:outline-none"
+          className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-navy transition-colors focus:outline-none"
         >
           <ArrowLeft size={15} /> Go Back
         </button>

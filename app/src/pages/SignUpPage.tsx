@@ -129,7 +129,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
 
         {/* Hero copy */}
         <div className="relative z-20 py-8 my-auto">
-          <h1 className="text-4xl lg:text-[44px] font-extrabold text-white leading-[1.15] tracking-tight max-w-[460px]">
+          <h1 className="font-display text-3xl md:text-4xl font-extrabold text-white leading-[1.15] tracking-tight max-w-[460px]">
             Shop Smarter with GoMalL
           </h1>
           <p className="text-sm text-white/90 mt-4 max-w-[380px] leading-relaxed">
@@ -220,7 +220,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
                   {...register("firstName")}
                   className={`w-full px-3 py-2.5 rounded-lg border text-sm transition-all bg-white outline-none
                     placeholder:text-gray-300
-                    focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+                    focus:border-navy focus:ring-2 focus:ring-navy/10
                     ${errors.firstName ? "border-red-400" : "border-gray-300"}`}
                   aria-invalid={!!errors.firstName}
                   aria-describedby={errors.firstName ? "firstName-error" : undefined}
@@ -248,7 +248,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
                   {...register("lastName")}
                   className={`w-full px-3 py-2.5 rounded-lg border text-sm transition-all bg-white outline-none
                     placeholder:text-gray-300
-                    focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+                    focus:border-navy focus:ring-2 focus:ring-navy/10
                     ${errors.lastName ? "border-red-400" : "border-gray-300"}`}
                   aria-invalid={!!errors.lastName}
                   aria-describedby={errors.lastName ? "lastName-error" : undefined}
@@ -277,7 +277,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
                 {...register("email")}
                 className={`w-full px-4 py-2.5 rounded-lg border text-sm transition-all bg-white outline-none
                   placeholder:text-gray-300
-                  focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+                  focus:border-navy focus:ring-2 focus:ring-navy/10
                   ${errors.email ? "border-red-400" : "border-gray-300"}`}
                 aria-invalid={!!errors.email}
                 aria-describedby={errors.email ? "email-error" : undefined}
@@ -305,7 +305,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
                 {...register("phone")}
                 className={`w-full px-4 py-2.5 rounded-lg border text-sm transition-all bg-white outline-none
                   placeholder:text-gray-300
-                  focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+                  focus:border-navy focus:ring-2 focus:ring-navy/10
                   ${errors.phone ? "border-red-400" : "border-gray-300"}`}
                 aria-invalid={!!errors.phone}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
@@ -333,7 +333,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
                 {...register("address")}
                 className={`w-full px-4 py-2.5 rounded-lg border text-sm transition-all bg-white outline-none
                   placeholder:text-gray-300
-                  focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+                  focus:border-navy focus:ring-2 focus:ring-navy/10
                   ${errors.address ? "border-red-400" : "border-gray-300"}`}
                 aria-invalid={!!errors.address}
                 aria-describedby={errors.address ? "address-error" : undefined}
@@ -365,7 +365,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
                   }}
                   className={`w-full px-4 py-2.5 pr-11 rounded-lg border text-sm transition-all bg-white outline-none
                     placeholder:text-gray-300
-                    focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+                    focus:border-navy focus:ring-2 focus:ring-navy/10
                     ${errors.password ? "border-red-400" : "border-gray-300"}`}
                   aria-invalid={!!errors.password}
                   aria-describedby="password-strength password-error"
@@ -432,7 +432,7 @@ const SignUpPage = ({ onNavigate }: SignUpPageProps) => {
                   }}
                   className={`w-full px-4 py-2.5 pr-11 rounded-lg border text-sm transition-all bg-white outline-none
                     placeholder:text-gray-300
-                    focus:border-[#0B4A8F] focus:ring-2 focus:ring-[#0B4A8F]/10
+                    focus:border-navy focus:ring-2 focus:ring-navy/10
                     ${errors.confirmPassword ? "border-red-400" : "border-gray-300"}`}
                   aria-invalid={!!errors.confirmPassword}
                   aria-describedby={errors.confirmPassword ? "confirm-error" : undefined}

@@ -58,10 +58,10 @@ export default function CartPage() {
 
         <div className="container-main py-6">
           <div className="flex items-center gap-3 mb-8">
-            <h1 className="text-2xl md:text-3xl font-extrabold text-[#0B1F3F]">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-navy">
               My Cart
             </h1>
-            <span className="bg-[#0B4A8F] text-white font-bold text-sm px-3 py-1 rounded-full">
+            <span className="bg-navy text-white font-bold text-sm px-3 py-1 rounded-full">
               {itemCount}
             </span>
           </div>
@@ -127,7 +127,7 @@ export default function CartPage() {
 
                         {/* Price */}
                         <div className="text-right min-w-[90px]">
-                          <p className="text-body font-bold text-[#0B4A8F]">
+                          <p className="text-body font-bold text-navy">
                             {formatPrice(itemTotal)}
                           </p>
                           <p className="text-[11px] text-text-muted mt-0.5">
@@ -167,14 +167,14 @@ export default function CartPage() {
 
                 <div className="flex justify-between items-baseline text-text-primary pt-2">
                   <span className="text-body font-bold">Total</span>
-                  <span className="text-2xl font-extrabold text-[#0B4A8F]">
+                  <span className="text-2xl font-extrabold text-navy">
                     {formatPrice(total)}
                   </span>
                 </div>
 
                 <button
                   onClick={() => navigate("/checkout")}
-                  className="w-full bg-[#0B2D6E] hover:bg-navy text-white font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-colors text-body"
+                  className="w-full bg-navy hover:bg-navy text-white font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-colors text-body"
                 >
                   <span>Proceed to Checkout</span>
                   <ArrowRight size={18} />
@@ -185,7 +185,7 @@ export default function CartPage() {
           ) : (
             /* Empty Cart View */
             <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
-              <div className="w-24 h-24 rounded-full bg-[#0B4A8F]/10 flex items-center justify-center text-[#0B4A8F] mb-6">
+              <div className="w-24 h-24 rounded-full bg-navy/10 flex items-center justify-center text-navy mb-6">
                 <ShoppingBag className="w-10 h-10" />
               </div>
 
@@ -199,7 +199,7 @@ export default function CartPage() {
 
               <button
                 onClick={() => navigate("/products")}
-                className="bg-[#0B4A8F] hover:bg-navy text-white font-bold text-body py-3.5 px-10 rounded-lg shadow-sm transition-colors cursor-pointer"
+                className="bg-navy hover:bg-navy text-white font-bold text-body py-3.5 px-10 rounded-lg shadow-sm transition-colors cursor-pointer"
               >
                 Continue Shopping
               </button>

@@ -30,7 +30,7 @@ const Footer = () => {
           <span className="text-badge uppercase text-white/50 tracking-[0.15em] font-bold">
             CONVINCED?
           </span>
-          <h2 className="text-h2 text-white mt-3 font-bold">
+          <h2 className="font-display text-h2 text-white mt-3 font-bold">
             Discover Stores Near You
           </h2>
           <p className="text-body text-white/90 mt-4 max-w-[500px] leading-relaxed">
@@ -39,7 +39,7 @@ const Footer = () => {
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="mt-8 bg-[#0B4A8F] hover:bg-[#0B4A8F]/90 text-white font-semibold text-body px-8 py-3 rounded-lg transition-colors duration-200"
+            className="btn btn-accent mt-8 px-8"
           >
             Shop Now
           </motion.button>

@@ -58,8 +58,8 @@ export default function CartPanel({ className, onClose }: CartPanelProps) {
       {/* Header */}
       <div className="flex shrink-0 items-center justify-between border-b border-border-gray px-5 py-4">
         <div className="flex items-center gap-3">
-          <h1 className="text-xl font-extrabold text-[#0B1F3F]">My Cart</h1>
-          <span className="rounded-full bg-[#0B2D6E] px-3 py-0.5 text-sm font-bold text-white">
+          <h1 className="text-xl font-extrabold text-navy">My Cart</h1>
+          <span className="rounded-full bg-navy px-3 py-0.5 text-sm font-bold text-white">
             {itemCount}
           </span>
         </div>
@@ -151,8 +151,8 @@ export default function CartPanel({ className, onClose }: CartPanelProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#0B4A8F]/10 text-[#0B4A8F]">
-              <ShoppingBag className="h-10 w-10" />
+            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-navy/10 text-navy">
+              <ShoppingBag className="h-9 w-9" />
             </div>
 
             <h2 className="mb-3 text-xl font-bold text-text-primary">Your cart is empty!</h2>
@@ -162,7 +162,7 @@ export default function CartPanel({ className, onClose }: CartPanelProps) {
 
             <button
               onClick={handleContinueShopping}
-              className="rounded-lg bg-[#0B4A8F] px-10 py-3.5 font-bold text-body text-white shadow-sm transition-colors hover:bg-navy cursor-pointer"
+              className="btn btn-primary px-10"
             >
               Continue Shopping
             </button>
@@ -175,12 +175,12 @@ export default function CartPanel({ className, onClose }: CartPanelProps) {
         <div className="shrink-0 space-y-5 border-t border-border-gray px-5 py-5">
           <div className="flex items-center justify-between">
             <span className="text-body font-medium text-text-secondary">Subtotal:</span>
-            <span className="text-2xl font-extrabold text-[#0B1F3F]">{formatPrice(subtotal)}</span>
+            <span className="text-2xl font-extrabold text-navy">{formatPrice(subtotal)}</span>
           </div>
 
           <button
             onClick={handleCheckout}
-            className="w-full rounded-lg bg-[#0B2D6E] py-4 text-body font-bold text-white shadow-sm transition-colors hover:bg-navy cursor-pointer"
+            className="btn btn-primary w-full"
           >
             Checkout
           </button>

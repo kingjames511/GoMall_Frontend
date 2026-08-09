@@ -175,7 +175,7 @@ export default function ProductsPage() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-h1 font-bold text-white tracking-tight"
+              className="text-3xl md:text-4xl font-bold text-white tracking-tight"
             >
               All Products
             </motion.h1>
@@ -420,7 +420,7 @@ export default function ProductsPage() {
 
                   <button
                     onClick={() => setShowFilters(false)}
-                    className="w-full mt-8 py-3 rounded-lg bg-[#E5E5E5] text-text-primary font-bold text-body hover:bg-gray-200 transition-colors cursor-pointer text-center"
+                    className="w-full mt-8 py-3 rounded-lg bg-border-gray text-text-primary font-bold text-body hover:bg-navy/5 transition-colors cursor-pointer text-center"
                   >
                     Apply Filter
                   </button>
@@ -436,7 +436,7 @@ export default function ProductsPage() {
                     initial={{ x: "-100%" }}
                     animate={{ x: 0 }}
                     exit={{ x: "-100%" }}
-                    className="w-80 bg-white h-full p-6 shadow-xl flex flex-col justify-between overflow-y-auto"
+                    className="w-80 bg-white h-full p-6 shadow-lg flex flex-col justify-between overflow-y-auto"
                   >
                     <div>
                       <div className="flex items-center justify-between pb-4 border-b border-border-gray mb-6">
@@ -533,7 +533,7 @@ export default function ProductsPage() {
 
                     <button
                       onClick={() => setShowFilters(false)}
-                      className="w-full py-3 bg-[#E5E5E5] text-text-primary font-bold text-body hover:bg-gray-200 rounded-lg transition-colors cursor-pointer text-center mt-4"
+                      className="w-full py-3 bg-border-gray text-text-primary font-bold text-body hover:bg-navy/5 rounded-lg transition-colors cursor-pointer text-center mt-4"
                     >
                       Apply Filter
                     </button>

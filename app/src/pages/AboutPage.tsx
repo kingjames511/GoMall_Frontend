@@ -66,7 +66,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-3xl md:text-5xl font-extrabold text-white tracking-tight"
+              className="text-3xl md:text-4xl font-extrabold text-white tracking-tight"
             >
               About Us
             </motion.h1>
@@ -100,14 +100,14 @@ export default function AboutPage() {
                     key={card.id}
                     className={`rounded-2xl p-6 shadow-sm border transition-all duration-300 ${
                       card.active
-                        ? "bg-[#0B4A8F] text-white border-[#0B4A8F]"
+                        ? "bg-navy text-white border-navy"
                         : "bg-white text-text-primary border-border-gray hover:shadow-md"
                     }`}
                   >
                     {/* Circle icon container */}
                     <div
                       className={`w-12 h-12 rounded-full flex items-center justify-center mb-6 shrink-0 ${
-                        card.active ? "bg-white/10 text-white" : "bg-[#0B4A8F]/10 text-[#0B4A8F]"
+                        card.active ? "bg-white/10 text-white" : "bg-navy/10 text-navy"
                       }`}
                     >
                       <Icon size={24} />
@@ -136,7 +136,7 @@ export default function AboutPage() {
             {/* Left side text blocks */}
             <div className="space-y-12">
               <div>
-                <h3 className="text-2xl font-extrabold text-[#0B1F3F] mb-4">
+                <h3 className="text-2xl font-extrabold text-navy mb-4">
                   Our Mission
                 </h3>
                 <p className="text-body text-text-secondary leading-relaxed">
@@ -145,7 +145,7 @@ export default function AboutPage() {
               </div>
 
               <div>
-                <h3 className="text-2xl font-extrabold text-[#0B1F3F] mb-4">
+                <h3 className="text-2xl font-extrabold text-navy mb-4">
                   Our Vision
                 </h3>
                 <p className="text-body text-text-secondary leading-relaxed">
@@ -155,7 +155,7 @@ export default function AboutPage() {
             </div>
 
             {/* Right side graphic mockup image */}
-            <div className="rounded-3xl overflow-hidden shadow-lg aspect-[4/3] bg-gray-bg border border-border-gray">
+            <div className="rounded-2xl overflow-hidden shadow-lg aspect-[4/3] bg-gray-bg border border-border-gray">
               <img
                 src="/assets/promo-shopper.jpg"
                 alt="Two shoppers holding shopping bags and looking at phone"

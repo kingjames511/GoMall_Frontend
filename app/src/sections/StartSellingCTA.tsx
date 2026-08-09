@@ -5,7 +5,7 @@ const StartSellingCTA = () => {
   return (
     <section className="bg-white pt-0 pb-8 md:pt-0 md:pb-16">
       <div className="container-main">
-        <div className="relative bg-navy pt-8 md:pt-4 px-8 md:px-16 pb-0 overflow-hidden rounded-3xl">
+        <div className="relative bg-navy pt-8 md:pt-4 px-8 md:px-16 pb-0 overflow-hidden rounded-2xl">
           {/* Subtle decorative background gradient */}
           <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy-blue pointer-events-none z-0" />
 
@@ -18,7 +18,7 @@ const StartSellingCTA = () => {
           >
             <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-6 pb-12 lg:pb-16 w-full">
               <div className="max-w-[450px]">
-                <h2 className="text-h3 md:text-h2 font-bold text-white leading-tight">
+                <h2 className="font-display text-h3 md:text-h2 font-bold text-white leading-tight">
                   Start Selling on <br></br> GoMall Today
                 </h2>
                 <p className="text-body-sm text-white/90 mt-2">
@@ -29,7 +29,7 @@ const StartSellingCTA = () => {
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-2 bg-orange hover:bg-orange/90 text-white font-semibold text-body px-8 py-3.5 rounded-lg transition-colors duration-200 shrink-0 self-start md:self-center"
+                className="btn btn-accent gap-2 px-8 shrink-0 self-start md:self-center"
               >
                 Get Started
                 <ArrowRight size={18} />

@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const ProductCardSkeleton = () => (
   <div className="flex flex-col w-full">
     {/* Image */}
-    <Skeleton className="aspect-[4/3] w-full rounded-2xl" />
+    <Skeleton className="aspect-[4/3] w-full rounded-xl" />
 
     {/* Content */}
     <div className="pt-3 flex flex-col gap-2">
@@ -58,7 +58,7 @@ export const ProductDetailSkeleton = () => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
       {/* Left column: image + description */}
       <div className="space-y-10">
-        <Skeleton className="aspect-[4/3] w-full rounded-3xl" />
+        <Skeleton className="aspect-[4/3] w-full rounded-2xl" />
         <div className="space-y-3">
           <Skeleton className="h-6 w-56" />
           <Skeleton className="h-4 w-full" />
@@ -106,7 +106,7 @@ export const ProductDetailSkeleton = () => (
 
 /* Mirrors <StoreCard /> — ready for when the stores API is wired up. */
 export const StoreCardSkeleton = () => (
-  <div className="bg-white border border-border-gray rounded-2xl p-3 sm:p-5 flex flex-col justify-between w-full shadow-sm">
+  <div className="bg-white border border-border-gray rounded-xl p-3 sm:p-5 flex flex-col justify-between w-full shadow-sm">
     <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
       <Skeleton className="w-10 h-10 sm:w-16 sm:h-16 rounded-full mx-auto sm:mx-0" />
       <div className="flex-1 min-w-0 space-y-2">
@@ -140,7 +140,7 @@ export const StoreGridSkeleton = ({
 
 /* Mirrors a CartPage item row. */
 export const CartLineSkeleton = () => (
-  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-5 border border-border-gray rounded-2xl bg-white shadow-sm gap-4">
+  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-5 border border-border-gray rounded-xl bg-white shadow-sm gap-4">
     <div className="flex gap-4 items-center">
       <Skeleton className="w-20 h-20 rounded-xl" />
       <div className="space-y-2">

@@ -73,7 +73,7 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
 
         {/* Middle Content: Title and Subtitle */}
         <div className="relative z-20 py-8 my-auto">
-          <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-white leading-[1.15] tracking-tight max-w-[460px]">
+          <h1 className="font-display text-3xl md:text-4xl font-extrabold text-white leading-[1.15] tracking-tight max-w-[460px]">
             Everything You Need, One Marketplace
           </h1>
           <p className="text-sm sm:text-base text-white/90 mt-4 max-w-[420px] leading-relaxed font-normal">
@@ -167,7 +167,7 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
                 className="text-xs transition-colors sm:text-sm text-text-secondary hover:text-text-primary focus:outline-none"
               >
                 Forgot Password?{" "}
-                <span className="text-[#0B4A8F] font-bold hover:underline">
+                <span className="text-navy font-bold hover:underline">
                   Click Here
                 </span>
               </button>
@@ -179,7 +179,7 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
               whileTap={{ scale: 0.99 }}
               type="submit"
               disabled={isPending}
-              className="w-full mt-4 bg-[#0B4A8F] hover:bg-[#08376b] flex items-center justify-center  text-white font-semibold py-3.5 rounded-lg text-sm transition-colors duration-200 shadow-sm cursor-pointer"
+              className="btn btn-primary w-full mt-4"
             >
               {isPending ? <Loader2 size={16} className="animate-spin" /> : "Login"}
             </motion.button>
@@ -191,7 +191,7 @@ const LoginPage = ({ onNavigate }: LoginPageProps) => {
             <button
               type="button"
               onClick={() => onNavigate?.("signup")}
-              className="text-[#0B4A8F] font-bold hover:underline cursor-pointer"
+              className="text-navy font-bold hover:underline cursor-pointer"
             >
               Sign Up
             </button>

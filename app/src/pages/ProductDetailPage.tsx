@@ -136,7 +136,7 @@ export default function ProductDetailPage() {
         {/* Store Detail Bar (Directly under breadcrumbs) */}
         <div className="container-main mb-6">
           <div className="flex items-center gap-3 bg-white py-2.5 border-b border-border-gray">
-            <div className="w-12 h-12 rounded-full bg-[#3B82F6] flex items-center justify-center text-white shrink-0">
+            <div className="w-12 h-12 rounded-full bg-navy flex items-center justify-center text-white shrink-0">
               <Store className="w-6 h-6" />
             </div>
             <div>
@@ -154,7 +154,7 @@ export default function ProductDetailPage() {
             {/* Left Column: Image, Description, Reviews */}
             <div className="space-y-10">
               {/* Main Product Image Area */}
-              <div className="aspect-[4/3] w-full rounded-3xl overflow-hidden relative bg-gray-bg flex items-center justify-center shadow-sm">
+              <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden relative bg-gray-bg flex items-center justify-center shadow-sm">
                 <img
                   src={product.image}
                   alt={product.name}
@@ -169,7 +169,7 @@ export default function ProductDetailPage() {
                 >
                   <Heart
                     size={20}
-                    className={`transition-colors ${isFavorite ? "fill-[#DC3545] text-[#DC3545]" : "text-white"}`}
+                    className={`transition-colors ${isFavorite ? "fill-red text-red" : "text-white"}`}
                   />
                 </button>
               </div>
@@ -216,7 +216,7 @@ export default function ProductDetailPage() {
                             <Star
                               key={i}
                               size={12}
-                              className={`w-3 h-3 ${i < rev.rating ? "fill-[#F5A623] text-[#F5A623]" : "text-gray-200 fill-none"}`}
+                              className={`w-3 h-3 ${i < rev.rating ? "fill-star text-star" : "text-gray-200 fill-none"}`}
                             />
                           ))}
                         </div>
@@ -250,7 +250,7 @@ export default function ProductDetailPage() {
                                 className="focus:outline-none"
                               >
                                 <Star
-                                  className={`w-6 h-6 transition-colors ${star <= userRating ? "fill-[#F5A623] text-[#F5A623]" : "text-gray-300 fill-none"}`}
+                                  className={`w-6 h-6 transition-colors ${star <= userRating ? "fill-star text-star" : "text-gray-300 fill-none"}`}
                                 />
                               </button>
                             ))}
@@ -302,7 +302,7 @@ export default function ProductDetailPage() {
             <div className="space-y-6 lg:sticky lg:top-24">
               <div>
                 {/* Title */}
-                <h1 className="text-h1 font-bold text-text-primary leading-tight">
+                <h1 className="text-2xl md:text-3xl font-bold text-text-primary leading-tight">
                   {product.name}
                 </h1>
                 
@@ -319,7 +319,7 @@ export default function ProductDetailPage() {
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-3.5 h-3.5 ${i < Math.round(product.rating) ? "fill-[#F5A623] text-[#F5A623]" : "text-gray-200 fill-none"}`}
+                        className={`w-3.5 h-3.5 ${i < Math.round(product.rating) ? "fill-star text-star" : "text-gray-200 fill-none"}`}
                       />
                     ))}
                   </div>
@@ -341,7 +341,7 @@ export default function ProductDetailPage() {
 
               {/* Price Area */}
               <div className="flex items-baseline gap-3.5 pt-4 border-t border-border-gray">
-                <span className="text-3xl font-extrabold text-[#0B4A8F]">
+                <span className="text-3xl font-extrabold text-navy">
                   {formatPrice(product.currentPrice)}
                 </span>
                 <span className="text-lg text-text-muted line-through">
@@ -411,14 +411,14 @@ export default function ProductDetailPage() {
               <div className="pt-6 space-y-3.5">
                 <button
                   onClick={handleBuyNow}
-                  className="w-full bg-[#0B2D6E] hover:bg-navy text-white font-semibold py-3.5 rounded-lg text-body transition-colors cursor-pointer shadow-sm"
+                  className="w-full bg-navy hover:bg-navy text-white font-semibold py-3.5 rounded-lg text-body transition-colors cursor-pointer shadow-sm"
                 >
                   Buy Now
                 </button>
 
                 <button
                   onClick={handleAddToCart}
-                  className="w-full border border-[#0B2D6E] text-[#0B2D6E] hover:bg-blue-50/30 font-semibold py-3.5 rounded-lg text-body transition-colors cursor-pointer bg-white"
+                  className="w-full border border-navy text-navy hover:bg-blue-50/30 font-semibold py-3.5 rounded-lg text-body transition-colors cursor-pointer bg-white"
                 >
                   Add to Cart
                 </button>

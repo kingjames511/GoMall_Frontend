@@ -45,7 +45,7 @@ export default function SupportPage() {
 
         {/* Customer Support Banner matching Attachment 2 */}
         <div className="container-main mb-10">
-          <div className="relative rounded-2xl md:rounded-3xl overflow-hidden h-[220px] sm:h-[260px] md:h-[300px] flex items-center justify-center text-center px-6">
+          <div className="relative rounded-2xl md:rounded-2xl overflow-hidden h-[220px] sm:h-[260px] md:h-[300px] flex items-center justify-center text-center px-6">
             {/* Background Image with Dark Blur Overlay */}
             <img
               src="/assets/support-bg.png"
@@ -56,7 +56,7 @@ export default function SupportPage() {
 
             {/* Banner Text Overlay */}
             <div className="relative z-10 max-w-2xl mx-auto text-white">
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
                 How Can We Help You?
               </h1>
               <p className="text-white/90 mt-3 text-xs sm:text-sm md:text-base font-normal leading-relaxed">
@@ -68,7 +68,7 @@ export default function SupportPage() {
 
         {/* Main Contact Card Container matching Attachment 2 */}
         <div className="container-main">
-          <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sm:p-10 md:p-14 max-w-5xl mx-auto">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-10 md:p-14 max-w-5xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
               
               {/* Left Column: Form */}
@@ -85,7 +85,7 @@ export default function SupportPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, fullName: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#0B4A8F] focus:ring-1 focus:ring-[#0B4A8F] text-sm text-text-primary outline-none transition-all placeholder:text-gray-300"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-navy focus:ring-1 focus:ring-navy text-sm text-text-primary outline-none transition-all placeholder:text-gray-300"
                     />
                   </div>
 
@@ -100,7 +100,7 @@ export default function SupportPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#0B4A8F] focus:ring-1 focus:ring-[#0B4A8F] text-sm text-text-primary outline-none transition-all placeholder:text-gray-300"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-navy focus:ring-1 focus:ring-navy text-sm text-text-primary outline-none transition-all placeholder:text-gray-300"
                     />
                   </div>
 
@@ -115,14 +115,14 @@ export default function SupportPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, message: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#0B4A8F] focus:ring-1 focus:ring-[#0B4A8F] text-sm text-text-primary outline-none transition-all resize-none"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-navy focus:ring-1 focus:ring-navy text-sm text-text-primary outline-none transition-all resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full bg-[#0B2D6E] hover:bg-[#082255] text-white font-semibold py-3.5 px-8 rounded-lg text-sm transition-all duration-200 cursor-pointer shadow-sm disabled:opacity-70"
+                    className="w-full bg-navy hover:bg-navy-hover text-white font-semibold py-3.5 px-8 rounded-lg text-sm transition-all duration-200 cursor-pointer shadow-sm disabled:opacity-70"
                   >
                     {submitting ? "Sending..." : "Send Message"}
                   </button>
@@ -136,15 +136,15 @@ export default function SupportPage() {
 
               {/* Right Column: Contact Info Container */}
               <div className="lg:col-span-4 flex flex-col">
-                <div className="bg-[#F9FAFB] rounded-2xl p-6 sm:p-8 flex flex-col justify-center gap-8 h-full border border-gray-100/60">
-                  <h2 className="text-xl sm:text-2xl font-bold text-[#333333] mb-2">
+                <div className="bg-gray-bg rounded-2xl p-6 sm:p-8 flex flex-col justify-center gap-8 h-full border border-gray-100/60">
+                  <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-2">
                     Contact Info
                   </h2>
 
                   <div className="space-y-6">
                     {/* Mail */}
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-[#333333] shrink-0 shadow-2xs">
+                      <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-text-primary shrink-0 shadow-2xs">
                         <Mail size={20} />
                       </div>
                       <span className="text-xs sm:text-sm font-medium text-text-primary break-all">
@@ -154,7 +154,7 @@ export default function SupportPage() {
 
                     {/* Phone */}
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-[#333333] shrink-0 shadow-2xs">
+                      <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-text-primary shrink-0 shadow-2xs">
                         <Phone size={20} />
                       </div>
                       <span className="text-xs sm:text-sm font-medium text-text-primary">
@@ -164,7 +164,7 @@ export default function SupportPage() {
 
                     {/* Location / Home */}
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-[#333333] shrink-0 shadow-2xs">
+                      <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-text-primary shrink-0 shadow-2xs">
                         <HomeIcon size={20} />
                       </div>
                       <span className="text-xs sm:text-sm font-medium text-text-primary">

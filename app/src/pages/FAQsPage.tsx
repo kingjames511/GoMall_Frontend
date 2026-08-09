@@ -22,8 +22,8 @@ export default function FAQsPage() {
 
         {/* Grey Header Banner matching Attachment 3 */}
         <div className="container-main mb-8">
-          <div className="bg-[#6E7178] rounded-2xl md:rounded-3xl py-12 md:py-16 px-6 text-center text-white shadow-sm relative overflow-hidden">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">
+          <div className="bg-navy rounded-2xl md:rounded-2xl py-12 md:py-16 px-6 text-center text-white shadow-sm relative overflow-hidden">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
               Frequently Asked Questions
             </h1>
             <p className="text-gray-200 mt-3 text-xs sm:text-sm md:text-base max-w-xl mx-auto font-normal">

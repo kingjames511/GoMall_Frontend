@@ -53,16 +53,16 @@ export default function ConfirmModal({
 
   const variantStyles = {
     danger: {
-      iconBg: "bg-[#FFF0F0]",
-      confirmBtn: "bg-[#FF3B30] text-white hover:bg-[#E03228]",
-      cancelBtn: "border border-[#FF3B30]/60 text-[#FF3B30] hover:bg-[#FFF0F0]",
-      defaultIcon: <Trash2 className="w-5 h-5 text-[#FF3B30]" />,
+      iconBg: "bg-red/10",
+      confirmBtn: "bg-red text-white hover:bg-red/90",
+      cancelBtn: "border border-red/40 text-red hover:bg-red/10",
+      defaultIcon: <Trash2 className="w-5 h-5 text-red" />,
     },
     primary: {
-      iconBg: "bg-blue-50",
-      confirmBtn: "bg-[#0B2D6E] text-white hover:bg-navy",
-      cancelBtn: "border border-[#0B2D6E]/60 text-[#0B2D6E] hover:bg-blue-50",
-      defaultIcon: <Trash2 className="w-5 h-5 text-[#0B4A8F]" />,
+      iconBg: "bg-navy/10",
+      confirmBtn: "bg-navy text-white hover:bg-navy-hover",
+      cancelBtn: "border border-navy/40 text-navy hover:bg-navy/10",
+      defaultIcon: <Trash2 className="w-5 h-5 text-navy" />,
     },
     warning: {
       iconBg: "bg-amber-50",
@@ -76,7 +76,7 @@ export default function ConfirmModal({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={(open) => !open && !isLoading && onClose()}>
-      <AlertDialogContent className="bg-white rounded-2xl p-5 border-none outline-none max-w-[340px] w-[90%] shadow-xl flex flex-col items-center text-center gap-0">
+      <AlertDialogContent className="bg-white rounded-2xl p-5 border-none outline-none max-w-[340px] w-[90%] shadow-lg flex flex-col items-center text-center gap-0">
         <AlertDialogHeader className="flex flex-col items-center text-center w-full space-y-0">
           {/* Compact Icon */}
           <div
@@ -89,12 +89,12 @@ export default function ConfirmModal({
           </div>
 
           {/* Compact Title */}
-          <AlertDialogTitle className="text-base font-bold text-[#1A1A1A] text-center w-full tracking-tight">
+          <AlertDialogTitle className="text-base font-bold text-text-primary text-center w-full tracking-tight">
             {title}
           </AlertDialogTitle>
 
           {/* Compact Description */}
-          <AlertDialogDescription className="text-gray-500 text-xs mt-1 text-center w-full leading-snug">
+          <AlertDialogDescription className="text-text-muted text-xs mt-1 text-center w-full leading-snug">
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>

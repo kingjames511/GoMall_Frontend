@@ -41,6 +41,7 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         navy: "#0B1F3F",
+        "navy-hover": "#16305A",
         "navy-blue": "#1E3A5F",
         orange: "#E8782F",
         green: "#22A65A",
@@ -53,8 +54,14 @@ export default {
         "gray-bg": "#F5F5F5",
       },
       fontFamily: {
-        inter: ["Inter", "system-ui", "sans-serif"],
-        vietnam: ["\"Be Vietnam Pro\"", "system-ui", "sans-serif"],
+        sans: ["Roboto", "system-ui", "sans-serif"],
+        roboto: ["Roboto", "system-ui", "sans-serif"],
+        lato: ["Lato", "system-ui", "sans-serif"],
+        heading: ["Lato", "system-ui", "sans-serif"],
+        display: ["Fraunces", "Georgia", "serif"],
+        // Legacy aliases repointed to Roboto so existing font-inter / font-vietnam classes stay consistent.
+        inter: ["Roboto", "system-ui", "sans-serif"],
+        vietnam: ["Roboto", "system-ui", "sans-serif"],
       },
       fontSize: {
         badge: ["0.6875rem", { lineHeight: "1", fontWeight: "600", letterSpacing: "0.02em" }],
@@ -63,8 +70,8 @@ export default {
         body: ["0.875rem", { lineHeight: "1.6" }],
         h4: ["1.125rem", { lineHeight: "1.4", fontWeight: "600" }],
         h3: ["1.25rem", { lineHeight: "1.3", fontWeight: "600" }],
-        h2: ["2rem", { lineHeight: "1.25", fontWeight: "600", letterSpacing: "-0.01em" }],
-        h1: ["3rem", { lineHeight: "1.15", fontWeight: "700", letterSpacing: "-0.02em" }],
+        h2: ["1.75rem", { lineHeight: "1.3", fontWeight: "600", letterSpacing: "-0.01em" }],
+        h1: ["2.5rem", { lineHeight: "1.15", fontWeight: "700", letterSpacing: "-0.02em" }],
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",
@@ -74,11 +81,11 @@ export default {
         xs: "calc(var(--radius) - 6px)",
       },
       boxShadow: {
-        xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        sm: "0 1px 2px rgba(0,0,0,0.05)",
-        md: "0 4px 12px rgba(0,0,0,0.08)",
-        lg: "0 8px 24px rgba(0,0,0,0.12)",
-        hover: "0 12px 32px rgba(0,0,0,0.15)",
+        xs: "0 1px 2px 0 rgb(0 0 0 / 0.04)",
+        sm: "0 1px 2px rgba(0,0,0,0.04)",
+        md: "0 2px 8px rgba(0,0,0,0.06)",
+        lg: "0 6px 16px rgba(0,0,0,0.08)",
+        hover: "0 8px 20px rgba(0,0,0,0.10)",
       },
       keyframes: {
         "accordion-down": {

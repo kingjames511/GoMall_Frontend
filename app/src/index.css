@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Lato:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -28,6 +28,7 @@
     --radius: 0.625rem;
 
     --color-navy: #0B1F3F;
+    --color-navy-hover: #16305A;
     --color-blue: #1E3A5F;
     --color-orange: #E8782F;
     --color-green: #22A65A;
@@ -45,12 +46,45 @@
   }
 
   body {
-    @apply bg-white text-[#1A1A1A] antialiased;
+    @apply bg-white text-text-primary antialiased;
     font-family: 'Roboto', system-ui, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Lato', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Shared button system — keeps every primary/outline/accent button visually identical site-wide */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md text-sm font-semibold
+      transition-colors duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed
+      focus:outline-none;
+  }
+  .btn-primary {
+    @apply bg-navy text-white hover:bg-navy-hover;
+  }
+  .btn-outline {
+    @apply border border-navy text-navy bg-transparent hover:bg-navy hover:text-white;
+  }
+  .btn-accent {
+    @apply bg-orange text-white hover:bg-orange/90;
+  }
+  .btn-danger {
+    @apply bg-red text-white hover:bg-red/90;
+  }
+
+  /* Shared text input */
+  .input-field {
+    @apply h-11 w-full rounded-md border border-border-gray bg-white px-4 text-sm text-text-primary
+      transition-colors outline-none placeholder:text-text-muted
+      focus:border-navy focus:ring-1 focus:ring-navy/20;
+  }
+
+  /* Standard content card surface */
+  .card-surface {
+    @apply bg-white border border-border-gray rounded-xl shadow-sm;
   }
 }
 

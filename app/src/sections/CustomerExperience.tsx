@@ -51,7 +51,7 @@ const CustomerExperience = () => {
                 className="flex flex-col items-start text-left"
               >
                 {/* Left-Aligned Icon Circle */}
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#EBF1FA] flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-navy/10 flex items-center justify-center shrink-0">
                   <Icon className="w-5 h-5 md:w-6 md:h-6 text-navy" />
                 </div>
                 <h3 className="text-body font-bold text-text-primary mt-4 sm:mt-5">

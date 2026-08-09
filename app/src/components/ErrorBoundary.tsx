@@ -30,23 +30,23 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render(): ReactNode {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 font-inter px-4">
-          <div className="max-w-md w-full text-center bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-gray-100">
-            <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-6 text-2xl">
+        <div className="min-h-screen flex items-center justify-center bg-gray-bg px-4">
+          <div className="max-w-md w-full text-center card-surface p-8 md:p-12">
+            <div className="w-14 h-14 rounded-full bg-red/10 flex items-center justify-center mx-auto mb-6 text-2xl">
               ⚠️
             </div>
 
-            <h1 className="text-2xl font-bold text-gray-900 mb-2 leading-tight">
+            <h1 className="text-2xl font-bold text-text-primary mb-2 leading-tight">
               Something went wrong
             </h1>
 
-            <p className="text-sm text-gray-500 mb-8 leading-relaxed">
+            <p className="text-sm text-text-muted mb-8 leading-relaxed">
               An unexpected error occurred. Please reload the page or try again later.
             </p>
 
             <button
               onClick={this.handleReload}
-              className="inline-flex items-center justify-center bg-[#0B2D6E] hover:bg-[#091f50] text-white font-semibold px-8 py-3.5 rounded-xl text-sm transition-colors duration-200 shadow-sm cursor-pointer"
+              className="btn btn-primary px-8"
             >
               Reload Page
             </button>

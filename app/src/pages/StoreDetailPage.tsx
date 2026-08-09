@@ -175,7 +175,7 @@ export default function StoreDetailPage() {
         </div>
 
         {/* Store Cover Header Banner */}
-        <div className="bg-[#054182] text-white py-10 relative overflow-hidden">
+        <div className="bg-navy text-white py-10 relative overflow-hidden">
           {/* Subtle Background pattern overlay */}
           <div className="absolute inset-0 bg-black/10 opacity-30 z-0" />
 
@@ -196,9 +196,9 @@ export default function StoreDetailPage() {
                   {store.name}
                 </h1>
                 {store.verified && (
-                  <span className="inline-flex items-center gap-1 bg-[#22A65A]/20 text-white border border-[#22A65A]/30 text-[10px] sm:text-badge px-2.5 py-0.5 rounded-full font-semibold self-center">
+                  <span className="inline-flex items-center gap-1 bg-green/20 text-white border border-green/30 text-[10px] sm:text-badge px-2.5 py-0.5 rounded-full font-semibold self-center">
                     <svg
-                      className="w-3 h-3 text-[#22A65A] fill-current"
+                      className="w-3 h-3 text-green fill-current"
                       viewBox="0 0 20 20"
                     >
                       <path
@@ -218,7 +218,7 @@ export default function StoreDetailPage() {
               {/* Ratings and products counts */}
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-3 text-caption text-white/80 font-medium">
                 <span className="flex items-center gap-1">
-                  <Star size={13} className="fill-[#F5A623] text-[#F5A623]" />
+                  <Star size={13} className="fill-star text-star" />
                   <span className="text-white font-bold">{store.rating}</span>
                   <span className="text-white/60">({formatCount(store.reviewCount)})</span>
                 </span>
@@ -473,7 +473,7 @@ export default function StoreDetailPage() {
                     initial={{ x: "-100%" }}
                     animate={{ x: 0 }}
                     exit={{ x: "-100%" }}
-                    className="w-80 bg-white h-full p-6 shadow-xl flex flex-col justify-between overflow-y-auto"
+                    className="w-80 bg-white h-full p-6 shadow-lg flex flex-col justify-between overflow-y-auto"
                   >
                     <div>
                       <div className="flex items-center justify-between pb-4 border-b border-border-gray mb-6">

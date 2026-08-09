@@ -14,7 +14,7 @@ const DiscoverStores = () => {
           <span className="text-caption uppercase text-text-secondary tracking-[0.1em]">
             CONVINCED?
           </span>
-          <h2 className="text-h2 text-text-primary mt-3">
+          <h2 className="font-display text-h2 text-text-primary mt-3">
             Discover Stores Near You
           </h2>
           <p className="text-body text-text-secondary mt-4 max-w-[500px]">
@@ -23,7 +23,7 @@ const DiscoverStores = () => {
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="mt-8 bg-orange hover:bg-orange/90 text-white font-semibold text-body px-8 py-3 rounded-md transition-colors duration-200"
+            className="btn btn-accent mt-8 px-8"
           >
             Shop Now
           </motion.button>

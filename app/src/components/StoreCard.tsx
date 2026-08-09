@@ -15,15 +15,15 @@ const StoreCard = ({ store, index }: StoreCardProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{
-        duration: 0.5,
-        delay: index * 0.08,
+        duration: 0.4,
+        delay: Math.min(index, 3) * 0.05,
         ease: [0.4, 0, 0.2, 1],
       }}
-      className="bg-white border border-border-gray rounded-2xl p-3 sm:p-5 flex flex-col justify-between w-full shadow-sm hover:shadow-md transition-all duration-300"
+      className="card-surface p-3 sm:p-5 flex flex-col justify-between w-full hover:shadow-md transition-shadow duration-300"
     >
       <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
-        {/* Large Blue Avatar Circle */}
-        <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-[#3B82F6] flex items-center justify-center shrink-0 text-white mx-auto sm:mx-0">
+        {/* Store Avatar Circle */}
+        <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-navy flex items-center justify-center shrink-0 text-white mx-auto sm:mx-0">
           <Store className="w-5 h-5 sm:w-8 sm:h-8" />
         </div>
 
@@ -34,9 +34,9 @@ const StoreCard = ({ store, index }: StoreCardProps) => {
             <h3 className="text-[13px] sm:text-body font-bold text-text-primary truncate text-center sm:text-left">
               {store.name}
             </h3>
-            <span className="flex items-center gap-1 bg-[#22A65A]/10 text-[#22A65A] text-[9px] sm:text-badge px-1.5 sm:px-2 py-0.5 rounded-full font-semibold shrink-0">
+            <span className="flex items-center gap-1 bg-green/10 text-green text-[9px] sm:text-badge px-1.5 sm:px-2 py-0.5 rounded-full font-semibold shrink-0">
               <svg
-                className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#22A65A]"
+                className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-green"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -58,14 +58,14 @@ const StoreCard = ({ store, index }: StoreCardProps) => {
           {/* Metadata: Ratings & Products */}
           <div className="flex items-center justify-center sm:justify-start gap-2 sm:gap-3.5 mt-2 sm:mt-3 text-[11px] sm:text-caption text-text-secondary font-medium">
             <span className="flex items-center gap-0.5 sm:gap-1">
-              <Star size={11} className="fill-[#F5A623] text-[#F5A623]" />
+              <Star size={11} className="fill-star text-star" />
               <span className="text-text-primary">{store.rating}</span>
               <span className="text-text-muted text-[10px] hidden sm:inline">
                 ({formatCount(store.reviewCount)})
               </span>
             </span>
             <span className="flex items-center gap-0.5 sm:gap-1">
-              <Package size={11} className="text-[#8E5A36]" />
+              <Package size={11} className="text-text-muted" />
               <span>{formatCount(store.productCount)}</span>
             </span>
           </div>
@@ -76,7 +76,7 @@ const StoreCard = ({ store, index }: StoreCardProps) => {
       <motion.button
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
-        className="mt-5 w-full border border-[#0B1F3F] text-[#0B1F3F] font-bold text-caption py-2.5 rounded-md hover:bg-[#054182] hover:text-white transition-all duration-200"
+        className="btn btn-outline mt-5 w-full h-9 sm:h-10 px-3 text-caption"
       >
         Visit Store
       </motion.button>

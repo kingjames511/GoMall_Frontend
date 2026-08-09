@@ -234,7 +234,7 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
 
         {/* Hero copy */}
         <div className="relative z-20 py-8 my-auto">
-          <h1 className="text-4xl lg:text-[44px] font-extrabold text-white leading-[1.15] tracking-tight max-w-[460px]">
+          <h1 className="font-display text-3xl md:text-4xl font-extrabold text-white leading-[1.15] tracking-tight max-w-[460px]">
             Shop Smarter with GoMalL
           </h1>
           <p className="text-sm text-white/90 mt-4 max-w-[380px] leading-relaxed">
@@ -372,16 +372,16 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
                 onFocus={(e) => e.target.select()}
                 disabled={isVerifying}
                 className={`
-                  w-12 h-14 sm:w-14 sm:h-16 text-center text-xl font-bold rounded-xl border-2
+                  w-12 h-12 sm:w-14 sm:h-14 text-center text-xl font-bold rounded-xl border-2
                   transition-all duration-150 outline-none bg-white
                   caret-transparent select-all
                   ${error
                     ? "border-red-500 text-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/15"
                     : digit
-                      ? "border-[#0B2D6E] text-[#0B2D6E]"
+                      ? "border-navy text-navy"
                       : "border-gray-200 text-gray-900"
                   }
-                  ${!error && "focus:border-[#0B2D6E] focus:ring-2 focus:ring-[#0B2D6E]/15"}
+                  ${!error && "focus:border-navy focus:ring-2 focus:ring-navy/15"}
                   disabled:opacity-50 disabled:cursor-not-allowed
                 `}
               />
@@ -394,9 +394,9 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
               type="button"
               onClick={handleResend}
               disabled={countdown > 0 || isResending}
-              className={`flex items-center gap-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2D6E] rounded
+              className={`flex items-center gap-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-navy rounded
                 ${countdown === 0 && !isResending
-                  ? "text-[#0B2D6E] hover:text-[#091f50] cursor-pointer"
+                  ? "text-navy hover:text-navy-hover cursor-pointer"
                   : "text-gray-400 cursor-not-allowed"
                 }`}
               aria-disabled={countdown > 0 || isResending}
@@ -429,8 +429,8 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
             whileTap={allFilled && !isVerifying ? { scale: 0.99 } : {}}
             className={`w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-lg text-sm transition-all duration-200 shadow-sm
               ${allFilled && !isVerifying
-                ? "bg-[#0B2D6E] hover:bg-[#091f50] text-white cursor-pointer"
-                : "bg-[#B8C5D6] text-white cursor-not-allowed"
+                ? "bg-navy hover:bg-navy-hover text-white cursor-pointer"
+                : "bg-navy/40 text-white cursor-not-allowed"
               }`}
             aria-busy={isVerifying}
             aria-disabled={!allFilled || isVerifying}
@@ -463,7 +463,7 @@ const OTPPage = ({ email = "example@email.com", onNavigate }: OTPPageProps) => {
               animate={{ scale: 1 }}
               transition={{ type: "spring", damping: 12 }}
             >
-              <CheckCircle2 size={72} className="text-green-500" />
+              <CheckCircle2 size={48} className="text-green" />
             </motion.div>
             <p className="text-xl font-bold text-gray-800">
               Account Verified!
