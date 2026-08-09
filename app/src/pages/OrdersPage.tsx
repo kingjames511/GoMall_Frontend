@@ -55,6 +55,8 @@ export default function OrdersPage() {
     setExpandedOrderId(expandedOrderId === orderId ? null : orderId);
   };
 
+
+  console.log(setOrders([]));
   const filteredOrders = orders.filter((order) => {
     if (activeTab === "all") return true;
     if (activeTab === "inprogress") return order.status === "on_the_way" || order.status === "out_for_delivery" || order.status === "processing";
@@ -104,35 +106,35 @@ export default function OrdersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-vietnam flex flex-col">
+    <div className="flex flex-col min-h-screen bg-white font-vietnam">
       <TopBar />
       <Navbar />
 
       <main className="flex-grow pb-16">
         {/* Breadcrumb */}
-        <div className="container-main py-4 text-caption text-text-secondary flex items-center gap-2">
-          <Link to="/" className="hover:text-navy transition-colors">
+        <div className="flex items-center gap-2 py-4 container-main text-caption text-text-secondary">
+          <Link to="/" className="transition-colors hover:text-navy">
             Home
           </Link>
           <span className="text-gray-300">/</span>
-          <span className="text-text-muted font-semibold">My Orders</span>
+          <span className="font-semibold text-text-muted">My Orders</span>
         </div>
 
         {/* Banner matching Attachment 1 */}
-        <div className="container-main mb-8">
+        <div className="mb-8 container-main">
           <div className="relative rounded-2xl md:rounded-2xl overflow-hidden h-[180px] sm:h-[210px] md:h-[240px] flex items-center px-6 md:px-12">
             <img
               src="/assets/orders-bg.png"
               alt="Grocery shopping cart"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 object-cover w-full h-full"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/65 to-black/30" />
 
-            <div className="relative z-10 text-white max-w-xl">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
+            <div className="relative z-10 max-w-xl text-white">
+              <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl md:text-4xl">
                 My Orders
               </h1>
-              <p className="text-gray-200 mt-2 text-xs sm:text-sm md:text-base font-normal">
+              <p className="mt-2 text-xs font-normal text-gray-200 sm:text-sm md:text-base">
                 Track, manage, and stay updated on all your orders in one convenient place.
               </p>
             </div>
@@ -141,7 +143,7 @@ export default function OrdersPage() {
 
         {/* Filter Tabs matching Attachment 1 */}
         <div className="container-main">
-          <div className="border-b border-gray-200 mb-8 flex gap-6 sm:gap-8 overflow-x-auto scrollbar-none text-sm font-medium">
+          <div className="flex gap-6 mb-8 overflow-x-auto text-sm font-medium border-b border-gray-200 sm:gap-8 scrollbar-none">
             <button
               onClick={() => setActiveTab("all")}
               className={`pb-3.5 px-1 border-b-2 whitespace-nowrap transition-all cursor-pointer ${
@@ -188,10 +190,10 @@ export default function OrdersPage() {
           </div>
 
           {/* Orders List Container */}
-          <div className="space-y-4 max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto space-y-4">
             {filteredOrders.length === 0 ? (
-              <div className="text-center py-16 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
-                <p className="text-gray-500 font-medium">No orders found for this filter.</p>
+              <div className="py-16 text-center border border-gray-200 border-dashed bg-gray-50 rounded-2xl">
+                <p className="font-medium text-gray-500">No orders found for this filter.</p>
               </div>
             ) : (
               filteredOrders.map((order) => {
@@ -200,30 +202,30 @@ export default function OrdersPage() {
                 return (
                   <div
                     key={order.id}
-                    className="bg-white rounded-2xl border border-gray-200/90 shadow-2xs overflow-hidden transition-all"
+                    className="overflow-hidden transition-all bg-white border rounded-2xl border-gray-200/90 shadow-2xs"
                   >
                     {/* Header Row */}
                     <div
                       onClick={() => toggleExpand(order.id)}
-                      className="p-4 sm:p-6 flex items-center justify-between gap-4 cursor-pointer hover:bg-gray-50/50 transition-colors"
+                      className="flex items-center justify-between gap-4 p-4 transition-colors cursor-pointer sm:p-6 hover:bg-gray-50/50"
                     >
                       {/* Left: Stack Icon & Title */}
-                      <div className="flex items-center gap-4 min-w-0">
+                      <div className="flex items-center min-w-0 gap-4">
                         {/* Thumbnail Box */}
-                        <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gray-600 overflow-hidden flex items-center justify-center shrink-0 shadow-xs">
+                        <div className="relative flex items-center justify-center overflow-hidden bg-gray-600 shadow-xs w-14 h-14 sm:w-16 sm:h-16 rounded-xl shrink-0">
                           <img
                             src={order.items[0]?.image || "/assets/product-iphone.jpg"}
                             alt="Order thumbnail"
-                            className="w-full h-full object-cover opacity-40 filter brightness-75"
+                            className="object-cover w-full h-full opacity-40 filter brightness-75"
                           />
-                          <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs sm:text-sm drop-shadow-md">
+                          <span className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white sm:text-sm drop-shadow-md">
                             {order.itemCount}+ Items
                           </span>
                         </div>
 
                         {/* Order Info */}
                         <div className="min-w-0">
-                          <h3 className="font-bold text-text-primary text-sm sm:text-base tracking-tight">
+                          <h3 className="text-sm font-bold tracking-tight text-text-primary sm:text-base">
                             Order {order.orderNumber}
                           </h3>
                           <p className="text-xs text-text-muted mt-0.5">
@@ -236,10 +238,10 @@ export default function OrdersPage() {
 
                       {/* Right: Total Price & Chevron */}
                       <div className="flex items-center gap-3 shrink-0">
-                        <span className="font-extrabold text-base sm:text-lg text-text-primary">
+                        <span className="text-base font-extrabold sm:text-lg text-text-primary">
                           &#8358; {order.total}
                         </span>
-                        <div className="text-gray-400 hover:text-text-primary transition-colors">
+                        <div className="text-gray-400 transition-colors hover:text-text-primary">
                           {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                         </div>
                       </div>
@@ -247,20 +249,20 @@ export default function OrdersPage() {
 
                     {/* Expanded Detail Body matching Attachment 1 */}
                     {isExpanded && (
-                      <div className="px-4 sm:px-6 pb-6 pt-2 space-y-5 border-t border-gray-100 bg-white">
+                      <div className="px-4 pt-2 pb-6 space-y-5 bg-white border-t border-gray-100 sm:px-6">
                         {/* Horizontal Product Items Slider Container */}
-                        <div className="bg-gray-bg border border-gray-100 rounded-xl p-4 sm:p-5 flex gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200">
+                        <div className="flex gap-4 p-4 overflow-x-auto border border-gray-100 bg-gray-bg rounded-xl sm:p-5 scrollbar-thin scrollbar-thumb-gray-200">
                           {order.items.map((item) => (
                             <div
                               key={item.id}
-                              className="w-32 sm:w-36 shrink-0 flex flex-col"
+                              className="flex flex-col w-32 sm:w-36 shrink-0"
                             >
                               {/* Image Card with badge */}
-                              <div className="relative w-full h-28 sm:h-32 rounded-xl bg-white border border-gray-200 overflow-hidden p-2 flex items-center justify-center">
+                              <div className="relative flex items-center justify-center w-full p-2 overflow-hidden bg-white border border-gray-200 h-28 sm:h-32 rounded-xl">
                                 <img
                                   src={item.image}
                                   alt={item.name}
-                                  className="w-full h-full object-cover rounded-lg"
+                                  className="object-cover w-full h-full rounded-lg"
                                 />
                                 <span className="w-5 h-5 bg-navy text-white rounded-full flex items-center justify-center text-[10px] font-bold absolute top-1.5 right-1.5 shadow-xs">
                                   {item.qty}
@@ -282,16 +284,16 @@ export default function OrdersPage() {
                         </div>
 
                         {/* Footer Bar inside expanded order */}
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
+                        <div className="flex flex-col items-start justify-between gap-4 pt-2 sm:flex-row sm:items-center">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-full bg-navy/10 text-navy flex items-center justify-center shrink-0">
+                            <div className="flex items-center justify-center rounded-full w-9 h-9 bg-navy/10 text-navy shrink-0">
                               <MapPin size={18} />
                             </div>
                             <div>
                               <p className="text-[11px] font-semibold text-text-muted uppercase tracking-wider">
                                 Delivering
                               </p>
-                              <p className="text-xs sm:text-sm font-bold text-text-primary">
+                              <p className="text-xs font-bold sm:text-sm text-text-primary">
                                 {order.address}
                               </p>
                             </div>
@@ -321,20 +323,20 @@ export default function OrdersPage() {
 
         {/* Order Tracking Modal */}
         {trackingModalOrder && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-5 relative shadow-lg animate-in fade-in zoom-in duration-200">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+            <div className="relative w-full max-w-md p-6 space-y-5 duration-200 bg-white shadow-lg rounded-2xl animate-in fade-in zoom-in">
               <button
                 onClick={() => setTrackingModalOrder(null)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 cursor-pointer"
+                className="absolute text-gray-400 cursor-pointer top-4 right-4 hover:text-gray-600"
               >
                 <X size={20} />
               </button>
 
               <div>
-                <span className="text-xs font-semibold text-navy uppercase tracking-wider">
+                <span className="text-xs font-semibold tracking-wider uppercase text-navy">
                   Real-time Tracking
                 </span>
-                <h3 className="text-xl font-bold text-text-primary mt-1">
+                <h3 className="mt-1 text-xl font-bold text-text-primary">
                   Order {trackingModalOrder.orderNumber}
                 </h3>
                 <p className="text-xs text-text-muted mt-0.5">
@@ -343,9 +345,9 @@ export default function OrdersPage() {
               </div>
 
               {/* Progress Steps */}
-              <div className="space-y-4 pt-2">
+              <div className="pt-2 space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0">
+                  <div className="flex items-center justify-center w-8 h-8 text-white rounded-full bg-emerald-500 shrink-0">
                     <CheckCircle2 size={16} />
                   </div>
                   <div>
@@ -357,7 +359,7 @@ export default function OrdersPage() {
                 <div className="w-0.5 h-4 bg-emerald-500 ml-4" />
 
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center shrink-0">
+                  <div className="flex items-center justify-center w-8 h-8 text-white rounded-full bg-navy shrink-0">
                     <Truck size={16} />
                   </div>
                   <div>
@@ -369,7 +371,7 @@ export default function OrdersPage() {
                 <div className="w-0.5 h-4 bg-gray-200 ml-4" />
 
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center shrink-0">
+                  <div className="flex items-center justify-center w-8 h-8 text-gray-400 bg-gray-100 rounded-full shrink-0">
                     <MapPin size={16} />
                   </div>
                   <div>
