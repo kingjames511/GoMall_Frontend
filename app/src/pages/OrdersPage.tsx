@@ -40,7 +40,7 @@ interface Order {
 export default function OrdersPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders] = useState<Order[]>([]);
   const [activeTab, setActiveTab] = useState<"all" | "inprogress" | "completed" | "cancelled">("all");
   const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
   const [trackingModalOrder, setTrackingModalOrder] = useState<Order | null>(null);
@@ -56,7 +56,7 @@ export default function OrdersPage() {
   };
 
 
-  console.log(setOrders([]));
+
   const filteredOrders = orders.filter((order) => {
     if (activeTab === "all") return true;
     if (activeTab === "inprogress") return order.status === "on_the_way" || order.status === "out_for_delivery" || order.status === "processing";

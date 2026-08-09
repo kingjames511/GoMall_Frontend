@@ -15,17 +15,17 @@ interface PromoSlide {
   overlay: string;
 }
 
-// Static marketing slides for the promo section (not API data)
+// Static advert slides for the promo channel (not API data)
 const slides: PromoSlide[] = [
   {
     id: 1,
     image: "/assets/bags.png",
     alt: "Shopping bags",
-    badge: "THE FUTURE OF SHOPPING",
-    title: "Your Trusted Marketplace for Everyday Needs",
+    badge: "FEATURED AD",
+    title: "Promote Your Brand to Ready Shoppers",
     description:
-      "We bring together buyers, merchants, and delivery partners on one platform, making online shopping simple, convenient, and accessible.",
-    cta: "Shop now",
+      "Showcase your latest store campaigns, seasonal launches, and exclusive deals across our audience-rich advert channel.",
+    cta: "Advertise now",
     variant: "solid",
     overlay:
       "linear-gradient(to top, rgba(11,31,63,0.95) 0%, rgba(11,31,63,0.4) 50%, rgba(11,31,63,0.1) 100%)",
@@ -34,10 +34,10 @@ const slides: PromoSlide[] = [
     id: 2,
     image: "/assets/bags3.png",
     alt: "Store interior",
-    title: "Explore Trusted Stores",
+    title: "Reach Customers with Premium Placement",
     description:
-      "Discover a wide range of verified stores and shop from your favorite businesses all in one place.",
-    cta: "Explore Stores",
+      "Connect merchants and buyers with featured ad placements that drive visibility, clicks, and conversions.",
+    cta: "See advertising",
     variant: "outline",
     overlay:
       "linear-gradient(to right, rgba(11,31,63,0.85) 0%, rgba(11,31,63,0.35) 60%, transparent 100%)",
@@ -46,10 +46,10 @@ const slides: PromoSlide[] = [
     id: 3,
     image: "/assets/bags2.png",
     alt: "Happy shopper",
-    title: "Deals You Won't Want to Miss",
+    title: "Launch Campaigns That Stand Out",
     description:
-      "Fresh offers land every day. Grab your favorites before they're gone.",
-    cta: "Shop now",
+      "Highlight your top offers with advertising that feels native, engaging, and easy for shoppers to act on.",
+    cta: "Get started",
     ctaIcon: true,
     variant: "solid",
     overlay:

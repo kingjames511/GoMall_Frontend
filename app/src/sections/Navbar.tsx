@@ -87,17 +87,17 @@ const Navbar = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center shrink-0 focus:outline-none cursor-pointer"
+          className="flex items-center cursor-pointer shrink-0 focus:outline-none"
         >
           <img
             src="/assets/logo.png"
             alt="GoMall"
-            className="h-12 w-auto object-contain"
+            className="object-contain w-auto h-12"
           />
         </Link>
 
         {/* Desktop Nav Links */}
-        <div className="hidden lg:flex items-center gap-2 xl:gap-4">
+        <div className="items-center hidden gap-2 lg:flex xl:gap-4">
           {navLinks.map((link) => {
             const active = isLinkActive(link.href);
             return (
@@ -121,10 +121,10 @@ const Navbar = () => {
           {/* Search Button */}
           <button
             onClick={() => navigate("/products")}
-            className="flex flex-col items-center justify-center text-text-secondary hover:text-navy transition-colors group cursor-pointer"
+            className="flex flex-col items-center justify-center transition-colors cursor-pointer text-text-secondary hover:text-navy group"
             aria-label="Search"
           >
-            <div className="w-10 h-10 rounded-full flex items-center justify-center text-text-secondary group-hover:text-navy">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full text-text-secondary group-hover:text-navy">
               <Search size={20} />
             </div>
             <span className="text-[10px] font-semibold text-text-muted mt-0.5 group-hover:text-navy">Search</span>
@@ -133,7 +133,7 @@ const Navbar = () => {
           {/* Wishlist / Favourite Button */}
           <button
             onClick={() => navigate("/wishlist")}
-            className="flex flex-col items-center justify-center transition-colors group cursor-pointer"
+            className="flex flex-col items-center justify-center transition-colors cursor-pointer group"
             aria-label="Favorites"
           >
             <div
@@ -153,7 +153,7 @@ const Navbar = () => {
           {/* Cart Button */}
           <button
             onClick={openCart}
-            className="flex flex-col items-center justify-center transition-colors relative group cursor-pointer"
+            className="relative flex flex-col items-center justify-center transition-colors cursor-pointer group"
             aria-label="Cart"
           >
             <div
@@ -186,7 +186,7 @@ const Navbar = () => {
               className="h-10 px-2 rounded-full border border-gray-200 bg-white flex items-center gap-1.5 hover:border-navy transition-all cursor-pointer shadow-sm"
               aria-label="User menu"
             >
-              <div className="w-7 h-7 rounded-full bg-gray-bg overflow-hidden border border-gray-100 shrink-0 flex items-center justify-center">
+              <div className="flex items-center justify-center overflow-hidden border border-gray-100 rounded-full w-7 h-7 bg-gray-bg shrink-0">
                 {loggedIn ? (
                   <span className="w-full h-full bg-navy text-white flex items-center justify-center text-[11px] font-bold">
                     {initials}
@@ -205,17 +205,17 @@ const Navbar = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.2, ease: "easeOut" }}
-                  className="absolute right-0 top-12 w-64 bg-white rounded-md shadow-lg border border-border-gray py-2 z-50"
+                  className="absolute right-0 z-50 w-64 py-2 bg-white border rounded-md shadow-lg top-12 border-border-gray"
                 >
                   {loggedIn ? (
                     <>
                       {/* Signed-in header with real user data */}
                       <div className="flex items-center gap-3 px-4 py-3 border-b border-border-gray">
-                        <div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center text-body font-bold shrink-0">
+                        <div className="flex items-center justify-center w-10 h-10 font-bold text-white rounded-full bg-navy text-body shrink-0">
                           {initials}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-body font-bold text-text-primary truncate">
+                          <p className="font-bold truncate text-body text-text-primary">
                             {fullName || "Loading…"}
                           </p>
                           <p className="text-[10px] text-text-muted mt-0.5 truncate">
@@ -246,11 +246,11 @@ const Navbar = () => {
                     <>
                       {/* Signed-out state */}
                       <div className="flex items-center gap-3 px-4 py-3 border-b border-border-gray">
-                        <div className="w-10 h-10 rounded-full bg-gray-bg flex items-center justify-center text-text-secondary shrink-0">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-bg text-text-secondary shrink-0">
                           <User size={20} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-body font-bold text-text-primary truncate">
+                          <p className="font-bold truncate text-body text-text-primary">
                             You're not signed in
                           </p>
                           <p className="text-[10px] text-text-muted mt-0.5 truncate">
@@ -288,7 +288,7 @@ const Navbar = () => {
 
           {/* Mobile menu toggle */}
           <button
-            className="lg:hidden text-text-primary focus:outline-none cursor-pointer"
+            className="cursor-pointer lg:hidden text-text-primary focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -331,9 +331,9 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="lg:hidden bg-white border-t border-border-gray overflow-hidden"
+            className="overflow-hidden bg-white border-t lg:hidden border-border-gray"
           >
-            <div className="container-main py-4 flex flex-col gap-1">
+            <div className="flex flex-col gap-1 py-4 container-main">
               {navLinks.map((link) => {
                 const active = isLinkActive(link.href);
                 return (
@@ -359,7 +359,7 @@ const Navbar = () => {
                       setMobileMenuOpen(false);
                       navigate("/wishlist");
                     }}
-                    className="flex items-center gap-2 text-text-secondary font-medium"
+                    className="flex items-center gap-2 font-medium text-text-secondary"
                   >
                     <Heart size={18} /> Favorites ({wishlist.length})
                   </button>
@@ -368,31 +368,56 @@ const Navbar = () => {
                       setMobileMenuOpen(false);
                       navigate("/cart");
                     }}
-                    className="flex items-center gap-2 text-text-secondary font-medium"
+                    className="flex items-center gap-2 font-medium text-text-secondary"
                   >
                     <ShoppingCart size={18} /> Cart ({cartCount})
                   </button>
                 </div>
 
-                <div className="flex gap-3 pt-1 px-4 mb-2">
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      navigate("/login");
-                    }}
-                    className="btn btn-outline flex-1"
-                  >
-                    Login
-                  </button>
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      navigate("/signup");
-                    }}
-                    className="btn btn-primary flex-1"
-                  >
-                    Sign Up
-                  </button>
+                <div className="flex gap-3 px-4 pt-1 mb-2">
+                  {loggedIn ? (
+                    <> 
+                      <button
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          navigate("/profile");
+                        }}
+                        className="flex-1 btn btn-outline"
+                      >
+                        Profile
+                      </button>
+                      <button
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          handleLogout();
+                        }}
+                        className="flex-1 btn btn-primary"
+                      >
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          navigate("/login");
+                        }}
+                        className="flex-1 btn btn-outline"
+                      >
+                        Login
+                      </button>
+                      <button
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          navigate("/signup");
+                        }}
+                        className="flex-1 btn btn-primary"
+                      >
+                        Sign Up
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
