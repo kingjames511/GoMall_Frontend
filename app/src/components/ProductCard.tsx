@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, ShoppingCart, Bell, Heart } from "lucide-react";
+import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import type { Product } from "@/types/product";
 import { useAppContext } from "@/context/AppContext";
@@ -12,12 +13,20 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, index }: ProductCardProps) => {
+  const navigate = useNavigate();
   const { toggleWishlist, isInWishlist } = useAppContext();
   const { addItem } = useCart();
   const isFavorite = isInWishlist(product.id);
 
   return (
     <motion.div
+      onClick={() => {
+        if (!product.inStock) {
+          toast.error(`${product.name} is currently out of stock`);
+          return;
+        }
+        navigate(`/products/${product.id}`);
+      }}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -26,7 +35,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
         delay: Math.min(index, 3) * 0.05,
         ease: [0.4, 0, 0.2, 1],
       }}
-      className="flex flex-col w-full bg-transparent overflow-hidden"
+      className="cursor-pointer flex flex-col w-full bg-transparent overflow-hidden"
     >
       {/* Image Area */}
       <div className="aspect-[4/3] w-full rounded-xl overflow-hidden relative bg-gray-bg flex items-center justify-center">

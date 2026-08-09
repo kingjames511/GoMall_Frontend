@@ -66,17 +66,17 @@ const PromoCard = ({ slide }: { slide: PromoSlide }) => (
     <img
       src={slide.image}
       alt={slide.alt}
-      className="absolute inset-0 w-full h-full object-cover"
+      className="absolute inset-0 object-cover w-full h-full"
     />
     <div className="absolute inset-0" style={{ background: slide.overlay }} />
     <div className="relative z-10 h-full flex flex-col justify-end p-6 sm:p-10 md:p-12 min-h-[360px] sm:min-h-[420px] md:min-h-[460px]">
       {slide.badge && (
-        <span className="text-caption uppercase text-orange tracking-wider">
+        <span className="tracking-wider uppercase text-caption text-orange">
           {slide.badge}
         </span>
       )}
-      <h2 className="text-h2 text-white mt-2 max-w-xl">{slide.title}</h2>
-      <p className="text-body-sm text-white/75 mt-4 max-w-md">
+      <h2 className="max-w-xl mt-2 text-white text-h2">{slide.title}</h2>
+      <p className="max-w-md mt-4 text-body-sm text-white/75">
         {slide.description}
       </p>
       <motion.button
@@ -121,7 +121,7 @@ const PromoGrid = () => {
     <section className="py-16 bg-white">
       <div className="container-main">
         {/* Mobile / tablet: sliding carousel */}
-        <div className="lg:hidden relative rounded-2xl overflow-hidden">
+        <div className="relative overflow-hidden lg:hidden rounded-2xl">
           {/* Sliding track */}
           <motion.div
             className="flex"
@@ -141,14 +141,14 @@ const PromoGrid = () => {
               <button
                 onClick={prev}
                 aria-label="Previous slide"
-                className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-sm text-white flex items-center justify-center transition-colors cursor-pointer"
+                className="absolute z-20 flex items-center justify-center w-10 h-10 text-white transition-colors -translate-y-1/2 rounded-full cursor-pointer left-3 sm:left-5 top-1/2 bg-white/20 hover:bg-white/35 backdrop-blur-sm"
               >
                 <ChevronLeft size={22} />
               </button>
               <button
                 onClick={next}
                 aria-label="Next slide"
-                className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-sm text-white flex items-center justify-center transition-colors cursor-pointer"
+                className="absolute z-20 flex items-center justify-center w-10 h-10 text-white transition-colors -translate-y-1/2 rounded-full cursor-pointer right-3 sm:right-5 top-1/2 bg-white/20 hover:bg-white/35 backdrop-blur-sm"
               >
                 <ChevronRight size={22} />
               </button>
@@ -157,7 +157,7 @@ const PromoGrid = () => {
 
           {/* Pagination dots */}
           {slides.length > 1 && (
-            <div className="absolute bottom-5 right-6 sm:right-10 z-20 flex items-center gap-2">
+            <div className="absolute z-20 flex items-center gap-2 bottom-5 right-6 sm:right-10">
               {slides.map((s, i) => (
                 <button
                   key={s.id}
@@ -176,11 +176,11 @@ const PromoGrid = () => {
         </div>
 
         {/* Desktop: static grid */}
-        <div className="hidden lg:grid grid-cols-3 gap-6">
+        <div className="hidden grid-cols-3 gap-6 lg:grid">
           {slides.map((slide) => (
             <div
               key={slide.id}
-              className="rounded-2xl overflow-hidden"
+              className="overflow-hidden rounded-2xl"
             >
               <PromoCard slide={slide} />
             </div>

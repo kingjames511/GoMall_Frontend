@@ -82,7 +82,7 @@ const HeroSection = () => {
               opacity: { duration: 1.4, ease: EASE },
               scale: { duration: 8, ease: "linear" },
             }}
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 object-cover object-center w-full h-full"
           />
         </AnimatePresence>
         {/* Gradient Overlay */}
@@ -96,7 +96,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content (cross-fades between slides) */}
-      <div className="relative z-10 container-main h-full flex items-center py-6 sm:py-0">
+      <div className="relative z-10 flex items-center h-full py-6 container-main sm:py-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}
@@ -106,11 +106,11 @@ const HeroSection = () => {
             transition={{ duration: 0.7, ease: EASE }}
             className="max-w-xs sm:max-w-md md:max-w-xl"
           >
-            <span className="inline-block text-[10px] sm:text-badge uppercase bg-orange text-white px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-sm tracking-wide font-semibold">
+            <span className="inline-block text-[10px] sm:text-badge uppercase bg-orange text-white px-2.5 py-0.5 sm:px-3 sm:py-2 rounded-sm tracking-wide font-semibold">
               {slide.badge}
             </span>
 
-            <h1 className="font-display text-2xl sm:text-4xl md:text-h1 text-white mt-3 sm:mt-6 leading-tight font-bold">
+            <h1 className="mt-3 text-2xl font-bold leading-tight text-white font-display sm:text-4xl md:text-h1 sm:mt-6">
               {slide.title}
             </h1>
 
@@ -131,7 +131,7 @@ const HeroSection = () => {
 
       {/* Pagination Dots */}
       {slides.length > 1 && (
-        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+        <div className="absolute z-20 flex items-center gap-2 -translate-x-1/2 bottom-4 sm:bottom-6 left-1/2">
           {slides.map((s, i) => (
             <button
               key={s.id}
